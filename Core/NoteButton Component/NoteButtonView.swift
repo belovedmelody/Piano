@@ -35,6 +35,9 @@ struct NoteButtonStyle<Label: View> {
     let hapticIntensity: Double
     let shape: (CGRect) -> Path
     let label: Label?
+    let shadowEnabled: Bool
+    let shadowY: CGFloat
+    let shadowRadius: CGFloat
     
     init(
         inactiveColor: Color = .accentColor,
@@ -43,6 +46,9 @@ struct NoteButtonStyle<Label: View> {
         hapticStyle: UIImpactFeedbackGenerator.FeedbackStyle = .rigid,
         hapticIntensity: Double = 0.67,
         shape: @escaping (CGRect) -> Path = { RoundedRectangle(cornerRadius: 10).path(in: $0) },
+        shadowEnabled: Bool = false,
+        shadowY: CGFloat = 2,
+        shadowRadius: CGFloat = 2,
         @ViewBuilder label: () -> Label?
     ) {
         self.inactiveColor = inactiveColor
@@ -51,6 +57,9 @@ struct NoteButtonStyle<Label: View> {
         self.hapticStyle = hapticStyle
         self.hapticIntensity = hapticIntensity
         self.shape = shape
+        self.shadowEnabled = shadowEnabled
+        self.shadowY = shadowY
+        self.shadowRadius = shadowRadius
         self.label = label()
     }
 }
@@ -94,6 +103,12 @@ struct NoteButtonView<Label: View>: View {
                         style.shape(geometry.frame(in: .local))
                             .fill(style.overlayColor.opacity(viewModel.isPressed ? style.overlayOpacity : 0))
                     )
+                    .shadow(
+                        color: .black.opacity(style.shadowEnabled ? 0.25 : 0),
+                        radius: style.shadowRadius,
+                        x: 0,
+                        y: style.shadowY
+                    )
                     .animation(nil, value: viewModel.isPressed)
             }
             
@@ -107,6 +122,33 @@ struct NoteButtonView<Label: View>: View {
             }
         }
         .animation(nil, value: viewModel.isPressed)
+    }
+    
+    func style(
+        inactiveColor: Color? = nil,
+        overlayColor: Color? = nil,
+        overlayOpacity: Double? = nil,
+        hapticStyle: UIImpactFeedbackGenerator.FeedbackStyle? = nil,
+        hapticIntensity: Double? = nil,
+        shadowEnabled: Bool? = nil,
+        shadowY: CGFloat? = nil,
+        shadowRadius: CGFloat? = nil
+    ) -> some View {
+        NoteButtonView(
+            viewModel: viewModel,
+            style: NoteButtonStyle(
+                inactiveColor: inactiveColor ?? style.inactiveColor,
+                overlayColor: overlayColor ?? style.overlayColor,
+                overlayOpacity: overlayOpacity ?? style.overlayOpacity,
+                hapticStyle: hapticStyle ?? style.hapticStyle,
+                hapticIntensity: hapticIntensity ?? style.hapticIntensity,
+                shape: style.shape,
+                shadowEnabled: shadowEnabled ?? style.shadowEnabled,
+                shadowY: shadowY ?? style.shadowY,
+                shadowRadius: shadowRadius ?? style.shadowRadius,
+                label: { style.label }
+            )
+        )
     }
 }
 

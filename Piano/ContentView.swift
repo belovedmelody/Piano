@@ -6,10 +6,42 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             HStack(spacing: 4) {
+                // No shadow (default)
                 noteButton(60, label: "C4")
-                blackNoteButton(61, label: "C#4")
-                largeNoteButton(62, label: "D4")
+                
+                // Black key with default shadow
+                NoteButtonView(
+                    viewModel: NoteButtonViewModel(
+                        noteNumbers: [61],
+                        isPressed: .constant(false)
+                    ),
+                    style: NoteButtonStyle(
+                        inactiveColor: .black,
+                        overlayColor: .white,
+                        overlayOpacity: 0.15,
+                        shadowEnabled: true,
+                        label: { Text("C#4") }
+                    )
+                )
+                
+                // Large key with custom deeper shadow
+                NoteButtonView(
+                    viewModel: NoteButtonViewModel(
+                        noteNumbers: [62],
+                        isPressed: .constant(false)
+                    ),
+                    style: NoteButtonStyle(
+                        shadowEnabled: true,
+                        shadowY: 4,
+                        shadowRadius: 3,
+                        label: { Text("D4") }
+                    )
+                )
+                .frame(height: 120)
+                
+                // Default shadow
                 noteButton(64, label: "E4")
+                
                 noteButton(65, label: "F4")
             }
             .frame(width: 300, height: 200)
