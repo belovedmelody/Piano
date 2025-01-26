@@ -51,7 +51,7 @@ extension View {
         .frame(width: width)
     }
 
-    func blackKey(_ midiNote: Int, label: String) -> some View {
+    func blackKey(_ midiNote: Int, label: String, width: CGFloat) -> some View {
         NoteButtonView(
             viewModel: NoteButtonViewModel(
                 noteNumbers: [midiNote],
@@ -98,7 +98,7 @@ extension View {
                 }
             )
         )
-        .opacity(0.3)
+        .frame(width: width)
     }
 }
 
@@ -129,14 +129,47 @@ struct FBSegment: View {
 
 struct PianoRegisterView: View {
     let whiteKeyWidth: CGFloat
+    let blackKeyWidth: CGFloat
     
     var body: some View {
         HStack(spacing: 4) {
             ZStack {
                 CESegment(whiteKeyWidth: whiteKeyWidth)
+                GeometryReader { geometry in
+                    VStack(spacing: 0) {
+                        HStack(spacing: 0) {
+                            Spacer()
+                                .frame(width: blackKeyWidth)
+                            blackKey(61, label: "C#", width: blackKeyWidth)
+                            Spacer()
+                            blackKey(63, label: "D#", width: blackKeyWidth)
+                            Spacer()
+                                .frame(width: blackKeyWidth)
+                        }
+                        Spacer()
+                            .frame(height: geometry.size.height * 0.4)
+                    }
+                }
             }
             ZStack {
                 FBSegment(whiteKeyWidth: whiteKeyWidth)
+                GeometryReader { geometry in
+                    VStack(spacing: 0) {
+                        HStack(spacing: 0) {
+                            Spacer()
+                                .frame(width: blackKeyWidth)
+                            blackKey(66, label: "F#", width: blackKeyWidth)
+                            Spacer()
+                            blackKey(68, label: "G#", width: blackKeyWidth)
+                            Spacer()
+                            blackKey(70, label: "A#", width: blackKeyWidth)
+                            Spacer()
+                                .frame(width: blackKeyWidth)
+                        }
+                        Spacer()
+                            .frame(height: geometry.size.height * 0.4)
+                    }
+                }
             }
         }
         .padding(.horizontal, 4)
@@ -145,12 +178,13 @@ struct PianoRegisterView: View {
 
 struct PianoView: View {
     let whiteKeyWidth: CGFloat
+    let blackKeyWidth: CGFloat
     
     var body: some View {
-        PianoRegisterView(whiteKeyWidth: whiteKeyWidth)
+        PianoRegisterView(whiteKeyWidth: whiteKeyWidth, blackKeyWidth: blackKeyWidth)
     }
 }
 
 #Preview {
-    PianoView(whiteKeyWidth: 50)
+    PianoView(whiteKeyWidth: 50, blackKeyWidth: 50)
 } 
