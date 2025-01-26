@@ -7,7 +7,7 @@ struct ContentView: View {
         NavigationView {
             HStack(spacing: 4) {
                 // No shadow (default)
-                noteButton(60, label: "C4")
+                whiteKey(62)  // Try our new white key
                 
                 // Black key with default shadow
                 NoteButtonView(
@@ -72,6 +72,30 @@ extension View {
     fileprivate func largeNoteButton(_ midiNote: Int, label: String? = nil) -> some View {
         noteButton(midiNote, label: label)
             .frame(height: 120)
+    }
+    
+    fileprivate func whiteKey(_ midiNote: Int) -> some View {
+        NoteButtonView(
+            viewModel: NoteButtonViewModel(
+                noteNumbers: [midiNote],
+                isPressed: .constant(false)
+            ),
+            style: NoteButtonStyle(
+                inactiveColor: .white,          // White background
+                overlayColor: .black,           // Black overlay
+                overlayOpacity: 0.12,           // Subtle opacity when pressed
+                shadowEnabled: true,
+                label: {
+                    VStack {
+                        Spacer()
+                        Text("D")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                            .padding(.bottom, 16)
+                    }
+                }
+            )
+        )
     }
 }
 
