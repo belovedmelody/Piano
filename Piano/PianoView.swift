@@ -1,16 +1,41 @@
 import SwiftUI
 
 extension View {
-    fileprivate func whiteKey(_ midiNote: Int, label: String) -> some View {
+    func whiteKey(_ midiNote: Int, label: String, width: CGFloat) -> some View {
         NoteButtonView(
             viewModel: NoteButtonViewModel(
                 noteNumbers: [midiNote],
                 isPressed: .constant(false)
             ),
             style: NoteButtonStyle(
-                inactiveColor: .white,          // White background
-                overlayColor: .black,           // Black overlay
-                overlayOpacity: 0.12,           // Subtle opacity when pressed
+                inactiveColor: .white,
+                overlayColor: .black,
+                overlayOpacity: 0.12,
+                hapticStyle: .rigid,
+                hapticIntensity: 0.67,
+                shape: { rect in
+                    Path { path in
+                        path.move(to: CGPoint(x: rect.minX, y: rect.minY))
+                        path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+                        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY - 8))
+                        path.addArc(
+                            center: CGPoint(x: rect.maxX - 8, y: rect.maxY - 8),
+                            radius: 8,
+                            startAngle: .degrees(0),
+                            endAngle: .degrees(90),
+                            clockwise: false
+                        )
+                        path.addLine(to: CGPoint(x: rect.minX + 8, y: rect.maxY))
+                        path.addArc(
+                            center: CGPoint(x: rect.minX + 8, y: rect.maxY - 8),
+                            radius: 8,
+                            startAngle: .degrees(90),
+                            endAngle: .degrees(180),
+                            clockwise: false
+                        )
+                        path.closeSubpath()
+                    }
+                },
                 shadowEnabled: true,
                 label: {
                     VStack {
@@ -23,49 +48,109 @@ extension View {
                 }
             )
         )
+        .frame(width: width)
+    }
+
+    func blackKey(_ midiNote: Int, label: String) -> some View {
+        NoteButtonView(
+            viewModel: NoteButtonViewModel(
+                noteNumbers: [midiNote],
+                isPressed: .constant(false)
+            ),
+            style: NoteButtonStyle(
+                inactiveColor: .black,
+                overlayColor: .white,
+                overlayOpacity: 0.2,
+                hapticStyle: .rigid,
+                hapticIntensity: 0.67,
+                shape: { rect in
+                    Path { path in
+                        path.move(to: CGPoint(x: rect.minX, y: rect.minY))
+                        path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+                        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY - 8))
+                        path.addArc(
+                            center: CGPoint(x: rect.maxX - 8, y: rect.maxY - 8),
+                            radius: 8,
+                            startAngle: .degrees(0),
+                            endAngle: .degrees(90),
+                            clockwise: false
+                        )
+                        path.addLine(to: CGPoint(x: rect.minX + 8, y: rect.maxY))
+                        path.addArc(
+                            center: CGPoint(x: rect.minX + 8, y: rect.maxY - 8),
+                            radius: 8,
+                            startAngle: .degrees(90),
+                            endAngle: .degrees(180),
+                            clockwise: false
+                        )
+                        path.closeSubpath()
+                    }
+                },
+                shadowEnabled: true,
+                label: {
+                    VStack {
+                        Spacer()
+                        Text(label)
+                            .font(.caption)
+                            .foregroundColor(Color(.systemGray2))
+                            .padding(.bottom, 16)
+                    }
+                }
+            )
+        )
+        .opacity(0.3)
     }
 }
 
 struct CESegment: View {
+    let whiteKeyWidth: CGFloat
+    
     var body: some View {
         HStack(spacing: 4) {
-            whiteKey(60, label: "C")  // C
-            whiteKey(62, label: "D")  // D
-            whiteKey(64, label: "E")  // E
+            whiteKey(60, label: "C", width: whiteKeyWidth)
+            whiteKey(62, label: "D", width: whiteKeyWidth)
+            whiteKey(64, label: "E", width: whiteKeyWidth)
         }
     }
 }
 
 struct FBSegment: View {
+    let whiteKeyWidth: CGFloat
+    
     var body: some View {
         HStack(spacing: 4) {
-            whiteKey(65, label: "F")  // F
-            whiteKey(67, label: "G")  // G
-            whiteKey(69, label: "A")  // A
-            whiteKey(71, label: "B")  // B
+            whiteKey(65, label: "F", width: whiteKeyWidth)
+            whiteKey(67, label: "G", width: whiteKeyWidth)
+            whiteKey(69, label: "A", width: whiteKeyWidth)
+            whiteKey(71, label: "B", width: whiteKeyWidth)
         }
     }
 }
 
 struct PianoRegisterView: View {
+    let whiteKeyWidth: CGFloat
+    
     var body: some View {
-        GeometryReader { geometry in
-            HStack(spacing: 4) {
-                CESegment()
-                    .frame(width: geometry.size.width * (3/7))  // 3 of 7 white keys
-                FBSegment()
-                    .frame(width: geometry.size.width * (4/7))  // 4 of 7 white keys
+        HStack(spacing: 4) {
+            ZStack {
+                CESegment(whiteKeyWidth: whiteKeyWidth)
+            }
+            ZStack {
+                FBSegment(whiteKeyWidth: whiteKeyWidth)
             }
         }
+        .padding(.horizontal, 4)
     }
 }
 
 struct PianoView: View {
+    let whiteKeyWidth: CGFloat
+    
     var body: some View {
-        PianoRegisterView()
+        PianoRegisterView(whiteKeyWidth: whiteKeyWidth)
     }
 }
 
 #Preview {
-    PianoView()
+    PianoView(whiteKeyWidth: 50)
 } 
