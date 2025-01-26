@@ -128,8 +128,15 @@ struct FBSegment: View {
 }
 
 struct PianoRegisterView: View {
+    @StateObject private var viewModel: PianoViewModel
     let whiteKeyWidth: CGFloat
     let blackKeyWidth: CGFloat
+    
+    init(startingNote: Int, whiteKeyWidth: CGFloat, blackKeyWidth: CGFloat) {
+        _viewModel = StateObject(wrappedValue: PianoViewModel(startingNote: startingNote))
+        self.whiteKeyWidth = whiteKeyWidth
+        self.blackKeyWidth = blackKeyWidth
+    }
     
     var body: some View {
         HStack(spacing: 4) {
@@ -181,10 +188,34 @@ struct PianoView: View {
     let blackKeyWidth: CGFloat
     
     var body: some View {
-        PianoRegisterView(whiteKeyWidth: whiteKeyWidth, blackKeyWidth: blackKeyWidth)
+        VStack(spacing: 10) {
+            // High octave (C4)
+            PianoRegisterView(
+                startingNote: 72,
+                whiteKeyWidth: whiteKeyWidth,
+                blackKeyWidth: blackKeyWidth
+            )
+            
+            // Middle octave (C3)
+            PianoRegisterView(
+                startingNote: 60,
+                whiteKeyWidth: whiteKeyWidth,
+                blackKeyWidth: blackKeyWidth
+            )
+            
+            // Low octave (C2)
+            PianoRegisterView(
+                startingNote: 48,
+                whiteKeyWidth: whiteKeyWidth,
+                blackKeyWidth: blackKeyWidth
+            )
+        }
     }
 }
 
 #Preview {
-    PianoView(whiteKeyWidth: 50, blackKeyWidth: 50)
+    PianoView(
+        whiteKeyWidth: 50,
+        blackKeyWidth: 32.5  // 50 * 0.65
+    )
 } 
