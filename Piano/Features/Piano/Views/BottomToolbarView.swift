@@ -29,7 +29,6 @@ struct BottomToolbarView: View {
             }
         }
         .padding()
-        .foregroundColor(.gray)
         .background(Color(.systemGray6))
     }
 }
