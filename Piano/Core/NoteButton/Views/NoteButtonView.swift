@@ -1,32 +1,7 @@
 import SwiftUI
 import UIKit  // For UIImpactFeedbackGenerator
 
-/// A customizable button that plays MIDI notes when pressed.
-/// 
-/// NoteButton adapts to its container's size by default, but can be explicitly sized using SwiftUI frame modifiers:
-/// ```
-/// noteButton(60)                           // Fills available space
-/// noteButton(60).frame(width: 100)         // Fixed width
-/// noteButton(60).frame(maxHeight: 80)      // Maximum height
-/// ```
-///
-/// Customize appearance using NoteButtonStyle:
-/// ```
-/// noteButton(60, style: NoteButtonStyle(
-///     inactiveColor: .blue,                // Base color
-///     overlayColor: .white,                // Press effect color
-///     overlayOpacity: 0.2,                 // Press effect strength
-///     hapticStyle: .rigid,                 // Haptic feedback style
-///     hapticIntensity: 0.67,              // Haptic feedback strength
-///     shape: { rect in ... },              // Custom shape
-///     label: {                             // Optional custom view as label
-///         VStack {
-///             Text("C")
-///             Text("4").font(.caption)
-///         }
-///     }
-/// ))
-/// ```
+
 struct NoteButtonStyle<Label: View> {
     let inactiveColor: Color
     let overlayColor: Color
@@ -64,32 +39,7 @@ struct NoteButtonStyle<Label: View> {
     }
 }
 
-/// A customizable button that plays MIDI notes when pressed.
-/// 
-/// NoteButton adapts to its container's size by default, but can be explicitly sized using SwiftUI frame modifiers:
-/// ```
-/// noteButton(60)                           // Fills available space
-/// noteButton(60).frame(width: 100)         // Fixed width
-/// noteButton(60).frame(maxHeight: 80)      // Maximum height
-/// ```
-///
-/// Customize appearance using NoteButtonStyle:
-/// ```
-/// noteButton(60, style: NoteButtonStyle(
-///     inactiveColor: .blue,                // Base color
-///     overlayColor: .white,                // Press effect color
-///     overlayOpacity: 0.2,                 // Press effect strength
-///     hapticStyle: .rigid,                 // Haptic feedback style
-///     hapticIntensity: 0.67,              // Haptic feedback strength
-///     shape: { rect in ... },              // Custom shape
-///     label: {                             // Optional custom view as label
-///         VStack {
-///             Text("C")
-///             Text("4").font(.caption)
-///         }
-///     }
-/// ))
-/// ```
+
 struct NoteButtonView<Label: View>: View {
     @StateObject var viewModel: NoteButtonViewModel
     let style: NoteButtonStyle<Label>

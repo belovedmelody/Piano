@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var showLabels = false  // Start with labels hidden
+    
     var body: some View {
         let screenWidth = UIScreen.main.bounds.width
         let availableWidth = screenWidth - 32
@@ -11,13 +13,14 @@ struct ContentView: View {
             VStack {
                 PianoView(
                     whiteKeyWidth: whiteKeyWidth,
-                    blackKeyWidth: blackKeyWidth
+                    blackKeyWidth: blackKeyWidth,
+                    showLabels: showLabels  // Pass the state
                 )
                 .padding(.vertical, 10)
                 
                 Spacer()
                 
-                BottomToolbarView()
+                BottomToolbarView(showLabels: $showLabels)
             }
             .navigationTitle("Piano")
             .navigationBarTitleDisplayMode(.large)
@@ -25,9 +28,12 @@ struct ContentView: View {
             .toolbarBackground(Color(.systemGray6), for: .navigationBar)
             .background(Color(.systemGray4))
         }
+        .tint(.orange)
     }
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 } 

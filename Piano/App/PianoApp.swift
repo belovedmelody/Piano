@@ -9,6 +9,11 @@ import SwiftUI
 
 @main
 struct PianoApp: App {
+    init() {
+        // Initialize audio engine at launch
+        _ = AudioEngine.shared
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

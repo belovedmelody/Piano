@@ -1,6 +1,12 @@
 import SwiftUI
 
 struct BottomToolbarView: View {
+    @Binding var showLabels: Bool
+    
+    init(showLabels: Binding<Bool>) {
+        self._showLabels = showLabels
+    }
+    
     var body: some View {
         HStack {
             Button(action: {
@@ -22,7 +28,7 @@ struct BottomToolbarView: View {
             Spacer()
             
             Button(action: {
-                // Add text format action
+                showLabels.toggle()
             }) {
                 Image(systemName: "textformat")
                     .font(.title2)
@@ -34,5 +40,5 @@ struct BottomToolbarView: View {
 }
 
 #Preview {
-    BottomToolbarView()
+    BottomToolbarView(showLabels: .constant(true))
 } 

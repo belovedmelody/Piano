@@ -6,14 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		033864C52D467130003D2E98 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033864BF2D467130003D2E98 /* AudioEngine.swift */; };
-		033864C72D467130003D2E98 /* NoteButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033864C12D467130003D2E98 /* NoteButtonView.swift */; };
-		033864C82D467130003D2E98 /* NoteButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033864C22D467130003D2E98 /* NoteButtonViewModel.swift */; };
-		033864D12D46716E003D2E98 /* MusicTheory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033864CE2D46716E003D2E98 /* MusicTheory.swift */; };
-		03F7B5C72D4695810048B9A6 /* TouchEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F7B5C62D4695810048B9A6 /* TouchEngine.swift */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXContainerItemProxy section */
 		033864A32D466E77003D2E98 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -32,14 +24,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		033864BF2D467130003D2E98 /* AudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
-		033864C12D467130003D2E98 /* NoteButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteButtonView.swift; sourceTree = "<group>"; };
-		033864C22D467130003D2E98 /* NoteButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteButtonViewModel.swift; sourceTree = "<group>"; };
-		033864CE2D46716E003D2E98 /* MusicTheory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTheory.swift; sourceTree = "<group>"; };
-		033864D92D46737B003D2E98 /* Piano.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Piano.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		033864DA2D46737B003D2E98 /* PianoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PianoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		033864DB2D46737B003D2E98 /* PianoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PianoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		03F7B5C62D4695810048B9A6 /* TouchEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchEngine.swift; sourceTree = "<group>"; };
+		033864D92D46737B003D2E98 /* Piano.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Piano.app; path = "/Users/maxmellman/Library/Mobile Documents/com~apple~CloudDocs/🗂️ Files/3.5 ⌨️ Coding/★ AI 2024/★ Playgrounds/2025-01-26 Piano/Piano/Piano/build/Debug-iphoneos/Piano.app"; sourceTree = "<absolute>"; };
+		033864DA2D46737B003D2E98 /* PianoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = PianoTests.xctest; path = "/Users/maxmellman/Library/Mobile Documents/com~apple~CloudDocs/🗂️ Files/3.5 ⌨️ Coding/★ AI 2024/★ Playgrounds/2025-01-26 Piano/Piano/Piano/build/Debug-iphoneos/Piano.app/PlugIns/PianoTests.xctest"; sourceTree = "<absolute>"; };
+		033864DB2D46737B003D2E98 /* PianoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = PianoUITests.xctest; path = "/Users/maxmellman/Library/Mobile Documents/com~apple~CloudDocs/🗂️ Files/3.5 ⌨️ Coding/★ AI 2024/★ Playgrounds/2025-01-26 Piano/Piano/Piano/build/Debug-iphoneos/PianoUITests-Runner.app/PlugIns/PianoUITests.xctest"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -91,39 +78,7 @@
 				033864942D466E76003D2E98 /* Piano */,
 				033864A52D466E77003D2E98 /* PianoTests */,
 				033864AF2D466E77003D2E98 /* PianoUITests */,
-				033864C42D467130003D2E98 /* Core */,
-				033864D02D46716E003D2E98 /* Theory */,
-				033864D92D46737B003D2E98 /* Piano.app */,
-				033864DA2D46737B003D2E98 /* PianoTests.xctest */,
-				033864DB2D46737B003D2E98 /* PianoUITests.xctest */,
 			);
-			sourceTree = "<group>";
-		};
-		033864C32D467130003D2E98 /* NoteButton Component */ = {
-			isa = PBXGroup;
-			children = (
-				033864BF2D467130003D2E98 /* AudioEngine.swift */,
-				033864C12D467130003D2E98 /* NoteButtonView.swift */,
-				033864C22D467130003D2E98 /* NoteButtonViewModel.swift */,
-				03F7B5C62D4695810048B9A6 /* TouchEngine.swift */,
-			);
-			path = "NoteButton Component";
-			sourceTree = "<group>";
-		};
-		033864C42D467130003D2E98 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				033864C32D467130003D2E98 /* NoteButton Component */,
-			);
-			path = Core;
-			sourceTree = "<group>";
-		};
-		033864D02D46716E003D2E98 /* Theory */ = {
-			isa = PBXGroup;
-			children = (
-				033864CE2D46716E003D2E98 /* MusicTheory.swift */,
-			);
-			path = Theory;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -270,11 +225,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				033864C52D467130003D2E98 /* AudioEngine.swift in Sources */,
-				033864D12D46716E003D2E98 /* MusicTheory.swift in Sources */,
-				03F7B5C72D4695810048B9A6 /* TouchEngine.swift in Sources */,
-				033864C72D467130003D2E98 /* NoteButtonView.swift in Sources */,
-				033864C82D467130003D2E98 /* NoteButtonViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
