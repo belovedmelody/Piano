@@ -47,15 +47,22 @@ struct FBSegment: View {
     }
 }
 
+struct PianoRegisterView: View {
+    var body: some View {
+        GeometryReader { geometry in
+            HStack(spacing: 4) {
+                CESegment()
+                    .frame(width: geometry.size.width * (3/7))  // 3 of 7 white keys
+                FBSegment()
+                    .frame(width: geometry.size.width * (4/7))  // 4 of 7 white keys
+            }
+        }
+    }
+}
+
 struct PianoView: View {
     var body: some View {
-        HStack(spacing: 4) {
-            CESegment()
-            FBSegment()
-        }
-        .frame(width: 300, height: 200)
-        .padding()
-        .background(Color(.systemGray4))
+        PianoRegisterView()
     }
 }
 
