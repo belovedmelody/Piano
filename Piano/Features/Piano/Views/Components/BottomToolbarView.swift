@@ -2,11 +2,11 @@ import SwiftUI
 
 struct BottomToolbarView: View {
     @Binding var showLabels: Bool
-    @Binding var labelStyle: MusicTheory.LabelStyle
+    @Binding var labelSystem: MusicTheory.LabelSystem
     
-    init(showLabels: Binding<Bool>, labelStyle: Binding<MusicTheory.LabelStyle>) {
+    init(showLabels: Binding<Bool>, labelSystem: Binding<MusicTheory.LabelSystem>) {
         self._showLabels = showLabels
-        self._labelStyle = labelStyle
+        self._labelSystem = labelSystem
     }
     
     var body: some View {
@@ -31,15 +31,19 @@ struct BottomToolbarView: View {
             
             Menu {
                 Button("None") {
-                    labelStyle = .none
+                    labelSystem = .none
                     showLabels = false
                 }
+                Button("♮ Naturals") {
+                    labelSystem = .naturals
+                    showLabels = true
+                }
                 Button("♭ Flats") {
-                    labelStyle = .flats
+                    labelSystem = .flats
                     showLabels = true
                 }
                 Button("♯ Sharps") {
-                    labelStyle = .sharps
+                    labelSystem = .sharps
                     showLabels = true
                 }
             } label: {
@@ -55,6 +59,6 @@ struct BottomToolbarView: View {
 #Preview {
     BottomToolbarView(
         showLabels: .constant(true),
-        labelStyle: .constant(.none)
+        labelSystem: .constant(.none)
     )
 } 

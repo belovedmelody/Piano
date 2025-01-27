@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var showLabels = false  // Start with labels hidden
-    @State private var labelStyle: MusicTheory.LabelStyle = .none
+    @State private var labelSystem: MusicTheory.LabelSystem = .none
     
     var body: some View {
         let screenWidth = UIScreen.main.bounds.width
@@ -16,7 +16,7 @@ struct ContentView: View {
                     whiteKeyWidth: whiteKeyWidth,
                     blackKeyWidth: blackKeyWidth,
                     showLabels: showLabels,
-                    labelStyle: labelStyle
+                    labelSystem: labelSystem
                 )
                 .padding(.vertical, 10)
                 
@@ -24,7 +24,7 @@ struct ContentView: View {
                 
                 BottomToolbarView(
                     showLabels: $showLabels,
-                    labelStyle: $labelStyle
+                    labelSystem: $labelSystem
                 )
             }
             .navigationTitle("Piano")
