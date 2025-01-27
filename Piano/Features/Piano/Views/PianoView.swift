@@ -37,6 +37,7 @@ extension View {
                                 Text(label)
                                     .font(.subheadline)
                                     .fontWeight(.medium)
+                                    .fontDesign(.rounded)
                                     .foregroundColor(.gray)
                                     .padding(.bottom, 13)
                             }
@@ -72,6 +73,7 @@ extension View {
                                 Text(label)
                                     .font(.caption)
                                     .fontWeight(.medium)
+                                    .fontDesign(.rounded)
                                     .foregroundColor(Color(.systemGray2))
                                     .padding(.bottom, 11.5)
                             }
