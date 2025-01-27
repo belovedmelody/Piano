@@ -37,7 +37,7 @@ extension View {
                                 Text(label)
                                     .font(.caption)
                                     .foregroundColor(.gray)
-                                    .padding(.bottom, 16)
+                                    .padding(.bottom, 13)
                             }
                         }
                     }
@@ -71,7 +71,7 @@ extension View {
                                 Text(label)
                                     .font(.caption)
                                     .foregroundColor(Color(.systemGray2))
-                                    .padding(.bottom, 16)
+                                    .padding(.bottom, 13)
                             }
                         }
                     }
@@ -86,12 +86,22 @@ struct CESegment: View {
     let whiteKeyWidth: CGFloat
     let startingNote: Int
     let showLabels: Bool
+    let labelStyle: MusicTheory.LabelStyle
     
     var body: some View {
         HStack(spacing: 4) {
-            whiteKey(startingNote + 0, label: "C", width: whiteKeyWidth, showLabels: showLabels)
-            whiteKey(startingNote + 2, label: "D", width: whiteKeyWidth, showLabels: showLabels)
-            whiteKey(startingNote + 4, label: "E", width: whiteKeyWidth, showLabels: showLabels)
+            whiteKey(startingNote + 0, 
+                    label: MusicTheory.noteName(for: startingNote + 0, style: labelStyle),
+                    width: whiteKeyWidth,
+                    showLabels: showLabels)
+            whiteKey(startingNote + 2,
+                    label: MusicTheory.noteName(for: startingNote + 2, style: labelStyle),
+                    width: whiteKeyWidth,
+                    showLabels: showLabels)
+            whiteKey(startingNote + 4,
+                    label: MusicTheory.noteName(for: startingNote + 4, style: labelStyle),
+                    width: whiteKeyWidth,
+                    showLabels: showLabels)
         }
     }
 }
@@ -100,13 +110,26 @@ struct FBSegment: View {
     let whiteKeyWidth: CGFloat
     let startingNote: Int
     let showLabels: Bool
+    let labelStyle: MusicTheory.LabelStyle
     
     var body: some View {
         HStack(spacing: 4) {
-            whiteKey(startingNote + 5, label: "F", width: whiteKeyWidth, showLabels: showLabels)
-            whiteKey(startingNote + 7, label: "G", width: whiteKeyWidth, showLabels: showLabels)
-            whiteKey(startingNote + 9, label: "A", width: whiteKeyWidth, showLabels: showLabels)
-            whiteKey(startingNote + 11, label: "B", width: whiteKeyWidth, showLabels: showLabels)
+            whiteKey(startingNote + 5,
+                    label: MusicTheory.noteName(for: startingNote + 5, style: labelStyle),
+                    width: whiteKeyWidth,
+                    showLabels: showLabels)
+            whiteKey(startingNote + 7,
+                    label: MusicTheory.noteName(for: startingNote + 7, style: labelStyle),
+                    width: whiteKeyWidth,
+                    showLabels: showLabels)
+            whiteKey(startingNote + 9,
+                    label: MusicTheory.noteName(for: startingNote + 9, style: labelStyle),
+                    width: whiteKeyWidth,
+                    showLabels: showLabels)
+            whiteKey(startingNote + 11,
+                    label: MusicTheory.noteName(for: startingNote + 11, style: labelStyle),
+                    width: whiteKeyWidth,
+                    showLabels: showLabels)
         }
     }
 }
@@ -116,19 +139,26 @@ struct PianoRegisterView: View {
     let whiteKeyWidth: CGFloat
     let blackKeyWidth: CGFloat
     let showLabels: Bool
+    let labelStyle: MusicTheory.LabelStyle
     
     var body: some View {
         HStack(spacing: 4) {
             ZStack {
-                CESegment(whiteKeyWidth: whiteKeyWidth, startingNote: startingNote, showLabels: showLabels)
+                CESegment(whiteKeyWidth: whiteKeyWidth, startingNote: startingNote, showLabels: showLabels, labelStyle: labelStyle)
                 GeometryReader { geometry in
                     VStack(spacing: 0) {
                         HStack(spacing: 0) {
                             Spacer()
                                 .frame(width: blackKeyWidth)
-                            blackKey(startingNote + 1, label: "C#", width: blackKeyWidth, showLabels: showLabels)
+                            blackKey(startingNote + 1,
+                                     label: MusicTheory.noteName(for: startingNote + 1, style: labelStyle),
+                                     width: blackKeyWidth,
+                                     showLabels: showLabels)
                             Spacer()
-                            blackKey(startingNote + 3, label: "D#", width: blackKeyWidth, showLabels: showLabels)
+                            blackKey(startingNote + 3,
+                                     label: MusicTheory.noteName(for: startingNote + 3, style: labelStyle),
+                                     width: blackKeyWidth,
+                                     showLabels: showLabels)
                             Spacer()
                                 .frame(width: blackKeyWidth)
                         }
@@ -138,17 +168,26 @@ struct PianoRegisterView: View {
                 }
             }
             ZStack {
-                FBSegment(whiteKeyWidth: whiteKeyWidth, startingNote: startingNote, showLabels: showLabels)
+                FBSegment(whiteKeyWidth: whiteKeyWidth, startingNote: startingNote, showLabels: showLabels, labelStyle: labelStyle)
                 GeometryReader { geometry in
                     VStack(spacing: 0) {
                         HStack(spacing: 0) {
                             Spacer()
                                 .frame(width: blackKeyWidth)
-                            blackKey(startingNote + 6, label: "F#", width: blackKeyWidth, showLabels: showLabels)
+                            blackKey(startingNote + 6,
+                                     label: MusicTheory.noteName(for: startingNote + 6, style: labelStyle),
+                                     width: blackKeyWidth,
+                                     showLabels: showLabels)
                             Spacer()
-                            blackKey(startingNote + 8, label: "G#", width: blackKeyWidth, showLabels: showLabels)
+                            blackKey(startingNote + 8,
+                                     label: MusicTheory.noteName(for: startingNote + 8, style: labelStyle),
+                                     width: blackKeyWidth,
+                                     showLabels: showLabels)
                             Spacer()
-                            blackKey(startingNote + 10, label: "A#", width: blackKeyWidth, showLabels: showLabels)
+                            blackKey(startingNote + 10,
+                                     label: MusicTheory.noteName(for: startingNote + 10, style: labelStyle),
+                                     width: blackKeyWidth,
+                                     showLabels: showLabels)
                             Spacer()
                                 .frame(width: blackKeyWidth)
                         }
@@ -166,6 +205,7 @@ struct PianoView: View {
     let whiteKeyWidth: CGFloat
     let blackKeyWidth: CGFloat
     let showLabels: Bool
+    let labelStyle: MusicTheory.LabelStyle
     
     var body: some View {
         VStack(spacing: 10) {
@@ -173,30 +213,39 @@ struct PianoView: View {
                 startingNote: 72,  // C5
                 whiteKeyWidth: whiteKeyWidth,
                 blackKeyWidth: blackKeyWidth,
-                showLabels: showLabels
+                showLabels: showLabels,
+                labelStyle: labelStyle
             )
             
             PianoRegisterView(
                 startingNote: 60,  // C4
                 whiteKeyWidth: whiteKeyWidth,
                 blackKeyWidth: blackKeyWidth,
-                showLabels: showLabels
+                showLabels: showLabels,
+                labelStyle: labelStyle
             )
             
             PianoRegisterView(
                 startingNote: 48,  // C3
                 whiteKeyWidth: whiteKeyWidth,
                 blackKeyWidth: blackKeyWidth,
-                showLabels: showLabels
+                showLabels: showLabels,
+                labelStyle: labelStyle
             )
         }
     }
 }
 
 #Preview {
-    PianoView(
-        whiteKeyWidth: 50,
-        blackKeyWidth: 32.5,
-        showLabels: true
+    let screenWidth = UIScreen.main.bounds.width
+    let availableWidth = screenWidth - 32
+    let whiteKeyWidth = availableWidth / 7
+    let blackKeyWidth = whiteKeyWidth * 0.65
+    
+    return PianoView(
+        whiteKeyWidth: whiteKeyWidth,
+        blackKeyWidth: blackKeyWidth,
+        showLabels: true,
+        labelStyle: .none
     )
 } 

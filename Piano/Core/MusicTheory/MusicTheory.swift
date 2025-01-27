@@ -37,4 +37,25 @@ enum MusicTheory {
             }
         }
     }
+
+    static let sharpPitchDisplayNames = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"]
+    static let flatPitchDisplayNames = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"]
+    
+    enum LabelStyle {
+        case sharps
+        case flats
+        case none
+    }
+
+    static func noteName(for midiNumber: Int, style: LabelStyle) -> String {
+        let pitchClass = midiNumber % 12
+        switch style {
+        case .sharps:
+            return sharpPitchDisplayNames[pitchClass]
+        case .flats:
+            return flatPitchDisplayNames[pitchClass]
+        case .none:
+            return ""
+        }
+    }
 } 

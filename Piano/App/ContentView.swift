@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var showLabels = false  // Start with labels hidden
+    @State private var labelStyle: MusicTheory.LabelStyle = .none
     
     var body: some View {
         let screenWidth = UIScreen.main.bounds.width
@@ -14,13 +15,17 @@ struct ContentView: View {
                 PianoView(
                     whiteKeyWidth: whiteKeyWidth,
                     blackKeyWidth: blackKeyWidth,
-                    showLabels: showLabels  // Pass the state
+                    showLabels: showLabels,
+                    labelStyle: labelStyle
                 )
                 .padding(.vertical, 10)
                 
                 Spacer()
                 
-                BottomToolbarView(showLabels: $showLabels)
+                BottomToolbarView(
+                    showLabels: $showLabels,
+                    labelStyle: $labelStyle
+                )
             }
             .navigationTitle("Piano")
             .navigationBarTitleDisplayMode(.large)
