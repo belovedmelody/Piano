@@ -1,8 +1,14 @@
 import SwiftUI
 
+enum ViewMode {
+    case piano
+    case scale
+}
+
 struct ContentView: View {
     @State private var showLabels = false  // Start with labels hidden
     @State private var labelSystem: MusicTheory.LabelSystem = .none
+    @State private var viewMode: ViewMode = .piano
     
     var body: some View {
         let screenWidth = UIScreen.main.bounds.width
@@ -12,26 +18,33 @@ struct ContentView: View {
         
         NavigationStack {
             VStack {
-                PianoView(
-                    whiteKeyWidth: whiteKeyWidth,
-                    blackKeyWidth: blackKeyWidth,
-                    showLabels: showLabels,
-                    labelSystem: labelSystem
-                )
-                .padding(.vertical, 10)
+                if viewMode == .piano {
+                    PianoView(
+                        whiteKeyWidth: whiteKeyWidth,
+                        blackKeyWidth: blackKeyWidth,
+                        showLabels: showLabels,
+                        labelSystem: labelSystem
+                    )
+                    .padding(.vertical, 10)
+                } else {
+                    ScaleView(labelSystem: labelSystem)
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 4)
+                }
                 
                 Spacer()
                 
                 BottomToolbarView(
                     showLabels: $showLabels,
-                    labelSystem: $labelSystem
+                    labelSystem: $labelSystem,
+                    viewMode: $viewMode
                 )
             }
             .navigationTitle("Piano")
             .navigationBarTitleDisplayMode(.large)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarBackground(Color(.systemGray6), for: .navigationBar)
-            .background(Color(.systemGray4))
+            .background(viewMode == .piano ? Color(.systemGray4) : Color(.systemGray6))
         }
         .tint(.orange)
     }

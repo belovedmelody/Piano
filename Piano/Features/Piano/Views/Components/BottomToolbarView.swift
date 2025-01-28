@@ -3,10 +3,12 @@ import SwiftUI
 struct BottomToolbarView: View {
     @Binding var showLabels: Bool
     @Binding var labelSystem: MusicTheory.LabelSystem
+    @Binding var viewMode: ViewMode
     
-    init(showLabels: Binding<Bool>, labelSystem: Binding<MusicTheory.LabelSystem>) {
+    init(showLabels: Binding<Bool>, labelSystem: Binding<MusicTheory.LabelSystem>, viewMode: Binding<ViewMode>) {
         self._showLabels = showLabels
         self._labelSystem = labelSystem
+        self._viewMode = viewMode
     }
     
     var body: some View {
@@ -21,10 +23,21 @@ struct BottomToolbarView: View {
             Spacer()
             
             Button(action: {
-                // Add line spacing action
+                if viewMode == .piano {
+                    viewMode = .scale
+                    labelSystem = .naturals
+                    showLabels = true
+                } else {
+                    viewMode = .piano
+                    labelSystem = .none
+                    showLabels = false
+                }
             }) {
-                Image(systemName: "line.3.horizontal.decrease.circle")
-                    .font(.title2)
+                Image(systemName: viewMode == .piano ? 
+                    "line.3.horizontal.decrease.circle" : 
+                    "line.3.horizontal.decrease.circle.fill"
+                )
+                .font(.title2)
             }
             
             Spacer()
@@ -59,6 +72,7 @@ struct BottomToolbarView: View {
 #Preview {
     BottomToolbarView(
         showLabels: .constant(true),
-        labelSystem: .constant(.none)
+        labelSystem: .constant(.none),
+        viewMode: .constant(.piano)
     )
 } 
