@@ -33,11 +33,9 @@ struct BottomToolbarView: View {
                     showLabels = false
                 }
             }) {
-                Image(systemName: viewMode == .piano ? 
-                    "line.3.horizontal.decrease.circle" : 
-                    "line.3.horizontal.decrease.circle.fill"
-                )
-                .font(.title2)
+                Image(systemName: "line.3.horizontal.decrease.circle")
+                    .symbolVariant(viewMode == .piano ? .none : .fill)
+                    .font(.title2)
             }
             
             Spacer()

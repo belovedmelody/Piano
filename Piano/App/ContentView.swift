@@ -44,7 +44,7 @@ struct ContentView: View {
             .navigationBarTitleDisplayMode(.large)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarBackground(Color(.systemGray6), for: .navigationBar)
-            .background(viewMode == .piano ? Color(.systemGray4) : Color(.systemGray6))
+            .background(Color(.systemGray4))
         }
         .tint(.orange)
     }
