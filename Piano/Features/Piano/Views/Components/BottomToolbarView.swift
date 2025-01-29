@@ -4,14 +4,29 @@ struct BottomToolbarView: View {
     @Binding var showLabels: Bool
     @Binding var labelSystem: MusicTheory.LabelSystem
     @Binding var viewMode: ViewMode
-    @Binding var showKeyPicker: Bool
+    @Binding var selectedTonic: MusicTheory.Tonic
     
     var body: some View {
         HStack {
             Button(action: {
-                showKeyPicker.toggle()
+                if let currentIndex = MusicTheory.Tonic.allCases.firstIndex(of: selectedTonic),
+                   currentIndex > 0 {
+                    selectedTonic = MusicTheory.Tonic.allCases[currentIndex - 1]
+                }
             }) {
-                Image(systemName: "tuningfork")
+                Image(systemName: "chevron.left")
+                    .font(.title2)
+            }
+            
+            Spacer()
+            
+            Button(action: {
+                if let currentIndex = MusicTheory.Tonic.allCases.firstIndex(of: selectedTonic),
+                   currentIndex < MusicTheory.Tonic.allCases.count - 1 {
+                    selectedTonic = MusicTheory.Tonic.allCases[currentIndex + 1]
+                }
+            }) {
+                Image(systemName: "chevron.right")
                     .font(.title2)
             }
             
@@ -53,6 +68,6 @@ struct BottomToolbarView: View {
         showLabels: .constant(true),
         labelSystem: .constant(.none),
         viewMode: .constant(.piano),
-        showKeyPicker: .constant(false)
+        selectedTonic: .constant(.c)
     )
 } 

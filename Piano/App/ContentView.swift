@@ -32,12 +32,11 @@ struct MainContent: View {
 }
 
 struct ContentView: View {
-    @State private var pianoLabelsOn = false  // Default off for piano
-    @State private var scaleLabelsOn = true   // Default on for scale
+    @State private var pianoLabelsOn = false
+    @State private var scaleLabelsOn = true
     @State private var labelSystem: MusicTheory.LabelSystem = .none
     @State private var viewMode: ViewMode = .piano
-    @State private var showKeyPicker = false
-    @State private var selectedTonic: MusicTheory.Tonic = .c
+    @State private var selectedTonic: MusicTheory.Tonic = .f_lower
     
     var body: some View {
         NavigationStack {
@@ -48,15 +47,12 @@ struct ContentView: View {
                 labelSystem: labelSystem,
                 selectedTonic: selectedTonic
             )
-            .sheet(isPresented: $showKeyPicker) {
-                KeySigPicker(selectedTonic: $selectedTonic)
-            }
             .safeAreaInset(edge: .bottom) {
                 BottomToolbarView(
                     showLabels: viewMode == .piano ? $pianoLabelsOn : $scaleLabelsOn,
                     labelSystem: $labelSystem,
                     viewMode: $viewMode,
-                    showKeyPicker: $showKeyPicker
+                    selectedTonic: $selectedTonic
                 )
             }
             .navigationTitle("Piano")
