@@ -44,7 +44,7 @@ extension View {
 struct ScaleViewRegister: View {
     let midiNotes: [Int]
     let showLabels: Bool
-    let labelSystem: MusicTheory.LabelSystem
+    let tonic: MusicTheory.Tonic
     
     var body: some View {
         HStack(spacing: 4) {
@@ -52,7 +52,7 @@ struct ScaleViewRegister: View {
                 toneBar(
                     midiNote,
                     showLabels: showLabels,
-                    label: MusicTheory.noteName(for: midiNote, style: labelSystem)
+                    label: MusicTheory.noteName(for: midiNote, tonic: tonic)
                 )
             }
         }
@@ -62,26 +62,17 @@ struct ScaleViewRegister: View {
 struct ScaleView: View {
     let showLabels: Bool
     let labelSystem: MusicTheory.LabelSystem
+    let selectedTonic: MusicTheory.Tonic
     
     var body: some View {
         VStack(spacing: 10) {
-            ScaleViewRegister(
-                midiNotes: [72, 74, 76, 77, 79, 81, 83],  // C5 to B5
-                showLabels: showLabels,
-                labelSystem: labelSystem
-            )
-            
-            ScaleViewRegister(
-                midiNotes: [60, 62, 64, 65, 67, 69, 71],  // C4 to B4
-                showLabels: showLabels,
-                labelSystem: labelSystem
-            )
-            
-            ScaleViewRegister(
-                midiNotes: [48, 50, 52, 53, 55, 57, 59],  // C3 to B3
-                showLabels: showLabels,
-                labelSystem: labelSystem
-            )
+            ForEach(MusicTheory.scaleRegisters(tonic: selectedTonic), id: \.self) { register in
+                ScaleViewRegister(
+                    midiNotes: register,
+                    showLabels: showLabels,
+                    tonic: selectedTonic
+                )
+            }
         }
     }
 }
@@ -89,7 +80,8 @@ struct ScaleView: View {
 #Preview {
     ScaleView(
         showLabels: true,
-        labelSystem: .sharps
+        labelSystem: .sharps,
+        selectedTonic: .c
     )
     .padding()
 } 

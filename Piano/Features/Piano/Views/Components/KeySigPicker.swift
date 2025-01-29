@@ -6,7 +6,7 @@ struct KeySigPicker: View {
     var body: some View {
         Picker("Key", selection: $selectedTonic) {
             ForEach(Array(MusicTheory.Tonic.allCases.reversed()), id: \.self) { tonic in
-                Text(tonic.rawValue)
+                Text(tonic.rawDisplayName)
                     .tag(tonic)
             }
         }
@@ -17,5 +17,5 @@ struct KeySigPicker: View {
 }
 
 #Preview {
-    KeySigPicker(selectedTonic: .constant(.C))
+    KeySigPicker(selectedTonic: .constant(.f_lower))
 } 

@@ -1,58 +1,27 @@
 import Foundation
 
 enum MusicTheory {
-    // Major scale pattern as boolean mask (true = in scale)
-    static let majorScalePattern: [Bool] = [
-        true,  // Root (0)
-        false, // ♭2/♯1
-        true,  // 2
-        false, // ♭3/♯2
-        true,  // 3
-        true,  // 4
-        false, // ♭5/♯4
-        true,  // 5
-        false, // ♭6/♯5
-        true,  // 6
-        false, // ♭7/♯6
-        true   // 7
-    ]
-
-    enum Tonic: String, CaseIterable {
-        case f = "f"  // Lower F
-        case G_flat = "G♭"
-        case G = "G"
-        case A_flat = "A♭"
-        case A = "A"
-        case B_flat = "B♭"
-        case B = "B"
-        case C = "C"
-        case D_flat = "D♭"
-        case D = "D"
-        case E_flat = "E♭"
-        case E = "E"
-        case F = "F"  // Upper F
+    enum Tonic: Int, CaseIterable {
+        case f_lower = 0  // F3
+        case g_flat, g, a_flat, a, b_flat, b, c, d_flat, d, e_flat, e, f  // to F4
+        
+        private static let names = ["F₃", "G♭", "G", "A♭", "A", "B♭", "B", "C", "D♭", "D", "E♭", "E", "F₄"]
+        
+        var rawDisplayName: String {
+            Self.names[rawValue]
+        }
         
         var midiNumber: Int {
-            switch self {
-            case .f: return 53      // Lower F
-            case .G_flat: return 54
-            case .G: return 55
-            case .A_flat: return 56
-            case .A: return 57
-            case .B_flat: return 58
-            case .B: return 59
-            case .C: return 60
-            case .D_flat: return 61
-            case .D: return 62
-            case .E_flat: return 63
-            case .E: return 64
-            case .F: return 65      // Upper F
-            }
+            rawValue + 53  // F3 starts at MIDI 53
         }
     }
-
+    
+    // Major scale pattern as intervals from tonic
+    static let majorScaleIntervals = [0, 2, 4, 5, 7, 9, 11]
+    
+    // Display names for notes (already have these)
     static let sharpPitchDisplayNames = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"]
-    static let flatPitchDisplayNames = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"]
+    static let flatPitchDisplayNames = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "C♭"]
     static let naturalDisplayNames = ["C", "", "D", "", "E", "F", "", "G", "", "A", "", "B"]
     
     enum LabelSystem {
@@ -62,6 +31,22 @@ enum MusicTheory {
         case none
     }
 
+    // Helper to determine if a tonic uses flats
+    static func usesFlats(_ tonic: Tonic) -> Bool {
+        switch tonic {
+        case .f_lower, .b_flat, .e_flat, .a_flat, .d_flat, .g_flat:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    // Get the appropriate label system for a tonic
+    static func labelSystemForTonic(_ tonic: Tonic) -> LabelSystem {
+        usesFlats(tonic) ? .flats : .sharps
+    }
+
+    // Keep the original style-based naming for PianoView
     static func noteName(for midiNumber: Int, style: LabelSystem) -> String {
         let pitchClass = midiNumber % 12
         switch style {
@@ -74,5 +59,32 @@ enum MusicTheory {
         case .none:
             return ""
         }
+    }
+
+    // Add the new tonic-based naming for ScaleView
+    static func noteName(for midiNumber: Int, tonic: Tonic) -> String {
+        let pitchClass = midiNumber % 12
+        return usesFlats(tonic) ? flatPitchDisplayNames[pitchClass] : sharpPitchDisplayNames[pitchClass]
+    }
+
+    // Build a major scale starting from a given MIDI note number
+    static func majorScale(fromMidiNumber midiNumber: Int) -> [Int] {
+        majorScaleIntervals.map { midiNumber + $0 }
+    }
+    
+    // Get the scale for a specific register (octave)
+    static func majorScaleRegister(tonic: Tonic, register: Int) -> [Int] {
+        // Start from one octave below the tonic's default MIDI number
+        let baseMidiNumber = (tonic.midiNumber - 12) + (register * 12)
+        return majorScale(fromMidiNumber: baseMidiNumber)
+    }
+    
+    // Get all three registers for ScaleView
+    static func scaleRegisters(tonic: Tonic) -> [[Int]] {
+        [
+            majorScaleRegister(tonic: tonic, register: 2),  // High register (C6)
+            majorScaleRegister(tonic: tonic, register: 1),  // Middle register (C5)
+            majorScaleRegister(tonic: tonic, register: 0)   // Low register (C4)
+        ]
     }
 } 

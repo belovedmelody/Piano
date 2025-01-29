@@ -10,6 +10,7 @@ struct MainContent: View {
     let pianoLabelsOn: Bool
     let scaleLabelsOn: Bool
     let labelSystem: MusicTheory.LabelSystem
+    let selectedTonic: MusicTheory.Tonic
     
     var body: some View {
         if viewMode == .piano {
@@ -21,7 +22,8 @@ struct MainContent: View {
         } else {
             ScaleView(
                 showLabels: scaleLabelsOn,
-                labelSystem: labelSystem
+                labelSystem: labelSystem,
+                selectedTonic: selectedTonic
             )
             .padding(.vertical, 10)
             .padding(.horizontal, 4)
@@ -35,7 +37,7 @@ struct ContentView: View {
     @State private var labelSystem: MusicTheory.LabelSystem = .none
     @State private var viewMode: ViewMode = .piano
     @State private var showKeyPicker = false
-    @State private var selectedTonic: MusicTheory.Tonic = .C
+    @State private var selectedTonic: MusicTheory.Tonic = .c
     
     var body: some View {
         NavigationStack {
@@ -43,7 +45,8 @@ struct ContentView: View {
                 viewMode: viewMode,
                 pianoLabelsOn: pianoLabelsOn,
                 scaleLabelsOn: scaleLabelsOn,
-                labelSystem: labelSystem
+                labelSystem: labelSystem,
+                selectedTonic: selectedTonic
             )
             .sheet(isPresented: $showKeyPicker) {
                 KeySigPicker(selectedTonic: $selectedTonic)
