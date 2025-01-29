@@ -25,12 +25,12 @@ struct BottomToolbarView: View {
             Button(action: {
                 if viewMode == .piano {
                     viewMode = .scale
-                    labelSystem = .naturals
                     showLabels = true
+                    labelSystem = .naturals
                 } else {
                     viewMode = .piano
-                    labelSystem = .none
                     showLabels = false
+                    labelSystem = .naturals
                 }
             }) {
                 Image(systemName: "line.3.horizontal.decrease.circle")
@@ -40,24 +40,12 @@ struct BottomToolbarView: View {
             
             Spacer()
             
-            Menu {
-                Button("None") {
-                    labelSystem = .none
-                    showLabels = false
-                }
-                Button("♮ Naturals") {
+            Button(action: {
+                showLabels.toggle()
+                if showLabels {
                     labelSystem = .naturals
-                    showLabels = true
                 }
-                Button("♭ Flats") {
-                    labelSystem = .flats
-                    showLabels = true
-                }
-                Button("♯ Sharps") {
-                    labelSystem = .sharps
-                    showLabels = true
-                }
-            } label: {
+            }) {
                 Image(systemName: "textformat")
                     .font(.title2)
             }
