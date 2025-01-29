@@ -136,39 +136,36 @@ struct KeySegment: View {
     }
 }
 
-// Then we can define our segments like this:
+enum KeySegmentType {
+    case ce(baseC: Int)      // C to E segment
+    case fb(baseC: Int)      // F to B segment
+    case lowerFB(baseC: Int) // Lower F to B segment
+    case upperCE(baseC: Int) // Upper C to E segment
+    
+    var notes: (whiteKeys: [Int], blackKeys: [Int]) {
+        switch self {
+        case .ce(let baseC):
+            return ([baseC + 0, baseC + 2, baseC + 4],
+                   [baseC + 1, baseC + 3])
+        case .fb(let baseC):
+            return ([baseC + 5, baseC + 7, baseC + 9, baseC + 11],
+                   [baseC + 6, baseC + 8, baseC + 10])
+        case .lowerFB(let baseC):
+            return ([baseC - 7, baseC - 5, baseC - 3, baseC - 1],
+                   [baseC - 6, baseC - 4, baseC - 2])
+        case .upperCE(let baseC):
+            return ([baseC + 12, baseC + 14, baseC + 16],
+                   [baseC + 13, baseC + 15])
+        }
+    }
+}
+
 extension KeySegment {
-    static func ceSegment(baseC: Int, showLabels: Bool, labelSystem: MusicTheory.LabelSystem) -> KeySegment {
-        KeySegment(
-            whiteNotes: [baseC + 0, baseC + 2, baseC + 4],
-            blackNotes: [baseC + 1, baseC + 3],
-            showLabels: showLabels,
-            labelSystem: labelSystem
-        )
-    }
-    
-    static func fbSegment(baseC: Int, showLabels: Bool, labelSystem: MusicTheory.LabelSystem) -> KeySegment {
-        KeySegment(
-            whiteNotes: [baseC + 5, baseC + 7, baseC + 9, baseC + 11],
-            blackNotes: [baseC + 6, baseC + 8, baseC + 10],
-            showLabels: showLabels,
-            labelSystem: labelSystem
-        )
-    }
-    
-    static func lowerFBSegment(baseC: Int, showLabels: Bool, labelSystem: MusicTheory.LabelSystem) -> KeySegment {
-        KeySegment(
-            whiteNotes: [baseC - 7, baseC - 5, baseC - 3, baseC - 1],
-            blackNotes: [baseC - 6, baseC - 4, baseC - 2],
-            showLabels: showLabels,
-            labelSystem: labelSystem
-        )
-    }
-    
-    static func upperCESegment(baseC: Int, showLabels: Bool, labelSystem: MusicTheory.LabelSystem) -> KeySegment {
-        KeySegment(
-            whiteNotes: [baseC + 12, baseC + 14, baseC + 16],
-            blackNotes: [baseC + 13, baseC + 15],
+    static func segment(_ type: KeySegmentType, showLabels: Bool, labelSystem: MusicTheory.LabelSystem) -> KeySegment {
+        let notes = type.notes
+        return KeySegment(
+            whiteNotes: notes.whiteKeys,
+            blackNotes: notes.blackKeys,
             showLabels: showLabels,
             labelSystem: labelSystem
         )
@@ -182,8 +179,8 @@ struct PianoRegisterView: View {
     
     var body: some View {
         HStack(spacing: 4) {
-            KeySegment.ceSegment(baseC: baseC, showLabels: showLabels, labelSystem: labelSystem)
-            KeySegment.fbSegment(baseC: baseC, showLabels: showLabels, labelSystem: labelSystem)
+            KeySegment.segment(.ce(baseC: baseC), showLabels: showLabels, labelSystem: labelSystem)
+            KeySegment.segment(.fb(baseC: baseC), showLabels: showLabels, labelSystem: labelSystem)
         }
         .padding(.horizontal, 4)
     }

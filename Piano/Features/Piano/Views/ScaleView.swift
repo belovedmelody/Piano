@@ -10,15 +10,15 @@ struct ToneBarShape: Shape {
 }
 
 extension View {
-    func toneBar(_ midiNote: Int, showLabels: Bool, label: String) -> some View {
+    func toneBar(_ midiNote: Int, showLabels: Bool, label: String, isAccidental: Bool) -> some View {
         NoteButtonView(
             viewModel: NoteButtonViewModel(
                 noteNumbers: [midiNote],
                 isPressed: .constant(false)
             ),
             style: NoteButtonStyle(
-                inactiveColor: .white,
-                overlayColor: .black,
+                inactiveColor: isAccidental ? Color(UIColor.gray) : .white,
+                overlayColor: isAccidental ? .white : .black,
                 overlayOpacity: 0.2,
                 hapticStyle: .rigid,
                 hapticIntensity: 0.67,
@@ -32,37 +32,9 @@ extension View {
                             .font(.subheadline)
                             .fontWeight(.medium)
                             .fontDesign(.rounded)
-                            .foregroundColor(Color(.systemGray2))
-                    }
-                }
-            )
-        )
-        .frame(maxWidth: .infinity)
-    }
-    
-    func accidentalToneBar(_ midiNote: Int, showLabels: Bool, label: String) -> some View {
-        NoteButtonView(
-            viewModel: NoteButtonViewModel(
-                noteNumbers: [midiNote],
-                isPressed: .constant(false)
-            ),
-            style: NoteButtonStyle(
-                inactiveColor: Color(UIColor.gray),
-                overlayColor: .white,
-                overlayOpacity: 0.2,
-                hapticStyle: .rigid,
-                hapticIntensity: 0.67,
-                shape: { rect in
-                    ToneBarShape().path(in: rect)
-                },
-                shadowEnabled: true,
-                label: {
-                    if showLabels {
-                        Text(label)
-                            .font(.subheadline)
-                            .fontWeight(.medium)
-                            .fontDesign(.rounded)
-                            .foregroundColor(Color(UIColor.systemGray5.resolvedColor(with: .init(userInterfaceStyle: .light))))
+                            .foregroundColor(isAccidental ? 
+                                Color(UIColor.systemGray5.resolvedColor(with: .init(userInterfaceStyle: .light))) :
+                                Color(.systemGray2))
                     }
                 }
             )
@@ -76,27 +48,15 @@ struct ScaleViewRegister: View {
     let showLabels: Bool
     let tonic: MusicTheory.Tonic
     
-    private func isAccidental(_ midiNumber: Int) -> Bool {
-        let pitchClass = midiNumber % 12
-        return [1, 3, 6, 8, 10].contains(pitchClass)  // C#/Db, D#/Eb, F#/Gb, G#/Ab, A#/Bb
-    }
-    
     var body: some View {
         HStack(spacing: 4) {
             ForEach(midiNotes, id: \.self) { midiNote in
-                if isAccidental(midiNote) {
-                    accidentalToneBar(
-                        midiNote,
-                        showLabels: showLabels,
-                        label: MusicTheory.noteName(for: midiNote, tonic: tonic)
-                    )
-                } else {
-                    toneBar(
-                        midiNote,
-                        showLabels: showLabels,
-                        label: MusicTheory.noteName(for: midiNote, tonic: tonic)
-                    )
-                }
+                toneBar(
+                    midiNote,
+                    showLabels: showLabels,
+                    label: MusicTheory.noteName(for: midiNote, tonic: tonic),
+                    isAccidental: MusicTheory.isAccidental(midiNote)
+                )
             }
         }
     }

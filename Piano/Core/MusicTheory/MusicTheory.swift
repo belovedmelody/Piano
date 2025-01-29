@@ -34,7 +34,7 @@ enum MusicTheory {
     // Helper to determine if a tonic uses flats
     static func usesFlats(_ tonic: Tonic) -> Bool {
         switch tonic {
-        case .f_lower, .b_flat, .e_flat, .a_flat, .d_flat, .g_flat:
+        case .f_lower, .b_flat, .e_flat, .a_flat, .d_flat, .g_flat, .f:
             return true
         default:
             return false
@@ -86,5 +86,10 @@ enum MusicTheory {
             majorScaleRegister(tonic: tonic, register: 1),  // Middle register (C5)
             majorScaleRegister(tonic: tonic, register: 0)   // Low register (C4)
         ]
+    }
+
+    static func isAccidental(_ midiNumber: Int) -> Bool {
+        let pitchClass = midiNumber % 12
+        return [1, 3, 6, 8, 10].contains(pitchClass)  // C#/Db, D#/Eb, F#/Gb, G#/Ab, A#/Bb
     }
 } 
