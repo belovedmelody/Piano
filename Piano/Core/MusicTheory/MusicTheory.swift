@@ -18,22 +18,35 @@ enum MusicTheory {
     ]
 
     enum Tonic: String, CaseIterable {
-        case C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B
+        case f = "f"  // Lower F
+        case G_flat = "G♭"
+        case G = "G"
+        case A_flat = "A♭"
+        case A = "A"
+        case B_flat = "B♭"
+        case B = "B"
+        case C = "C"
+        case D_flat = "D♭"
+        case D = "D"
+        case E_flat = "E♭"
+        case E = "E"
+        case F = "F"  // Upper F
         
         var midiNumber: Int {
             switch self {
+            case .f: return 53      // Lower F
+            case .G_flat: return 54
+            case .G: return 55
+            case .A_flat: return 56
+            case .A: return 57
+            case .B_flat: return 58
+            case .B: return 59
             case .C: return 60
-            case .Db: return 61
+            case .D_flat: return 61
             case .D: return 62
-            case .Eb: return 63
+            case .E_flat: return 63
             case .E: return 64
-            case .F: return 65
-            case .Gb: return 66
-            case .G: return 67
-            case .Ab: return 68
-            case .A: return 69
-            case .Bb: return 70
-            case .B: return 71
+            case .F: return 65      // Upper F
             }
         }
     }

@@ -5,12 +5,6 @@ struct BottomToolbarView: View {
     @Binding var labelSystem: MusicTheory.LabelSystem
     @Binding var viewMode: ViewMode
     
-    init(showLabels: Binding<Bool>, labelSystem: Binding<MusicTheory.LabelSystem>, viewMode: Binding<ViewMode>) {
-        self._showLabels = showLabels
-        self._labelSystem = labelSystem
-        self._viewMode = viewMode
-    }
-    
     var body: some View {
         HStack {
             Button(action: {
@@ -25,13 +19,12 @@ struct BottomToolbarView: View {
             Button(action: {
                 if viewMode == .piano {
                     viewMode = .scale
-                    showLabels = true
                     labelSystem = .naturals
                 } else {
                     viewMode = .piano
-                    showLabels = false
                     labelSystem = .naturals
                 }
+                // Removed all showLabels manipulation since it's handled by ContentView
             }) {
                 Image(systemName: "line.3.horizontal.decrease.circle")
                     .symbolVariant(viewMode == .piano ? .none : .fill)

@@ -10,7 +10,7 @@ struct ToneBarShape: Shape {
 }
 
 extension View {
-    func toneBar(_ midiNote: Int, label: String) -> some View {
+    func toneBar(_ midiNote: Int, showLabels: Bool, label: String) -> some View {
         NoteButtonView(
             viewModel: NoteButtonViewModel(
                 noteNumbers: [midiNote],
@@ -27,11 +27,13 @@ extension View {
                 },
                 shadowEnabled: true,
                 label: {
-                    Text(label)
-                        .font(.subheadline)
-                        .fontWeight(.medium)
-                        .fontDesign(.rounded)
-                        .foregroundColor(Color(.systemGray2))
+                    if showLabels {
+                        Text(label)
+                            .font(.subheadline)
+                            .fontWeight(.medium)
+                            .fontDesign(.rounded)
+                            .foregroundColor(Color(.systemGray2))
+                    }
                 }
             )
         )
@@ -41,6 +43,7 @@ extension View {
 
 struct ScaleViewRegister: View {
     let midiNotes: [Int]
+    let showLabels: Bool
     let labelSystem: MusicTheory.LabelSystem
     
     var body: some View {
@@ -48,6 +51,7 @@ struct ScaleViewRegister: View {
             ForEach(midiNotes, id: \.self) { midiNote in
                 toneBar(
                     midiNote,
+                    showLabels: showLabels,
                     label: MusicTheory.noteName(for: midiNote, style: labelSystem)
                 )
             }
@@ -56,22 +60,26 @@ struct ScaleViewRegister: View {
 }
 
 struct ScaleView: View {
+    let showLabels: Bool
     let labelSystem: MusicTheory.LabelSystem
     
     var body: some View {
         VStack(spacing: 10) {
             ScaleViewRegister(
                 midiNotes: [72, 74, 76, 77, 79, 81, 83],  // C5 to B5
+                showLabels: showLabels,
                 labelSystem: labelSystem
             )
             
             ScaleViewRegister(
                 midiNotes: [60, 62, 64, 65, 67, 69, 71],  // C4 to B4
+                showLabels: showLabels,
                 labelSystem: labelSystem
             )
             
             ScaleViewRegister(
                 midiNotes: [48, 50, 52, 53, 55, 57, 59],  // C3 to B3
+                showLabels: showLabels,
                 labelSystem: labelSystem
             )
         }
@@ -79,6 +87,9 @@ struct ScaleView: View {
 }
 
 #Preview {
-    ScaleView(labelSystem: .sharps)
-        .padding()
+    ScaleView(
+        showLabels: true,
+        labelSystem: .sharps
+    )
+    .padding()
 } 

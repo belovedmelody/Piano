@@ -6,7 +6,8 @@ enum ViewMode {
 }
 
 struct ContentView: View {
-    @State private var showLabels = false  // Start with labels hidden
+    @State private var pianoLabelsOn = false  // Default off for piano
+    @State private var scaleLabelsOn = true   // Default on for scale
     @State private var labelSystem: MusicTheory.LabelSystem = .none
     @State private var viewMode: ViewMode = .piano
     
@@ -15,20 +16,23 @@ struct ContentView: View {
             VStack {
                 if viewMode == .piano {
                     PianoView(
-                        showLabels: showLabels,
+                        showLabels: pianoLabelsOn,
                         labelSystem: labelSystem
                     )
                     .padding(.vertical, 10)
                 } else {
-                    ScaleView(labelSystem: labelSystem)
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 4)
+                    ScaleView(
+                        showLabels: scaleLabelsOn,
+                        labelSystem: labelSystem
+                    )
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 4)
                 }
                 
                 Spacer()
                 
                 BottomToolbarView(
-                    showLabels: $showLabels,
+                    showLabels: viewMode == .piano ? $pianoLabelsOn : $scaleLabelsOn,
                     labelSystem: $labelSystem,
                     viewMode: $viewMode
                 )
