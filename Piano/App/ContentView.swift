@@ -5,36 +5,55 @@ enum ViewMode {
     case scale
 }
 
+struct MainContent: View {
+    let viewMode: ViewMode
+    let pianoLabelsOn: Bool
+    let scaleLabelsOn: Bool
+    let labelSystem: MusicTheory.LabelSystem
+    
+    var body: some View {
+        if viewMode == .piano {
+            PianoView(
+                showLabels: pianoLabelsOn,
+                labelSystem: labelSystem
+            )
+            .padding(.vertical, 10)
+        } else {
+            ScaleView(
+                showLabels: scaleLabelsOn,
+                labelSystem: labelSystem
+            )
+            .padding(.vertical, 10)
+            .padding(.horizontal, 4)
+        }
+    }
+}
+
 struct ContentView: View {
     @State private var pianoLabelsOn = false  // Default off for piano
     @State private var scaleLabelsOn = true   // Default on for scale
     @State private var labelSystem: MusicTheory.LabelSystem = .none
     @State private var viewMode: ViewMode = .piano
+    @State private var showKeyPicker = false
+    @State private var selectedTonic: MusicTheory.Tonic = .C
     
     var body: some View {
         NavigationStack {
-            VStack {
-                if viewMode == .piano {
-                    PianoView(
-                        showLabels: pianoLabelsOn,
-                        labelSystem: labelSystem
-                    )
-                    .padding(.vertical, 10)
-                } else {
-                    ScaleView(
-                        showLabels: scaleLabelsOn,
-                        labelSystem: labelSystem
-                    )
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 4)
-                }
-                
-                Spacer()
-                
+            MainContent(
+                viewMode: viewMode,
+                pianoLabelsOn: pianoLabelsOn,
+                scaleLabelsOn: scaleLabelsOn,
+                labelSystem: labelSystem
+            )
+            .sheet(isPresented: $showKeyPicker) {
+                KeySigPicker(selectedTonic: $selectedTonic)
+            }
+            .safeAreaInset(edge: .bottom) {
                 BottomToolbarView(
                     showLabels: viewMode == .piano ? $pianoLabelsOn : $scaleLabelsOn,
                     labelSystem: $labelSystem,
-                    viewMode: $viewMode
+                    viewMode: $viewMode,
+                    showKeyPicker: $showKeyPicker
                 )
             }
             .navigationTitle("Piano")

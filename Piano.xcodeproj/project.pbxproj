@@ -24,9 +24,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		033864D92D46737B003D2E98 /* Piano.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Piano.app; path = "/Users/maxmellman/Library/Mobile Documents/com~apple~CloudDocs/🗂️ Files/3.5 ⌨️ Coding/★ AI 2024/★ Playgrounds/2025-01-26 Piano/Piano/Piano/build/Debug-iphoneos/Piano.app"; sourceTree = "<absolute>"; };
-		033864DA2D46737B003D2E98 /* PianoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = PianoTests.xctest; path = "/Users/maxmellman/Library/Mobile Documents/com~apple~CloudDocs/🗂️ Files/3.5 ⌨️ Coding/★ AI 2024/★ Playgrounds/2025-01-26 Piano/Piano/Piano/build/Debug-iphoneos/Piano.app/PlugIns/PianoTests.xctest"; sourceTree = "<absolute>"; };
-		033864DB2D46737B003D2E98 /* PianoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = PianoUITests.xctest; path = "/Users/maxmellman/Library/Mobile Documents/com~apple~CloudDocs/🗂️ Files/3.5 ⌨️ Coding/★ AI 2024/★ Playgrounds/2025-01-26 Piano/Piano/Piano/build/Debug-iphoneos/PianoUITests-Runner.app/PlugIns/PianoUITests.xctest"; sourceTree = "<absolute>"; };
+		03F7B5FF2D49CEE30048B9A6 /* Piano.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Piano.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		03F7B6002D49CEE30048B9A6 /* PianoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PianoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		03F7B6012D49CEE30048B9A6 /* PianoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PianoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -78,6 +78,9 @@
 				033864942D466E76003D2E98 /* Piano */,
 				033864A52D466E77003D2E98 /* PianoTests */,
 				033864AF2D466E77003D2E98 /* PianoUITests */,
+				03F7B5FF2D49CEE30048B9A6 /* Piano.app */,
+				03F7B6002D49CEE30048B9A6 /* PianoTests.xctest */,
+				03F7B6012D49CEE30048B9A6 /* PianoUITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,7 +106,7 @@
 			packageProductDependencies = (
 			);
 			productName = Piano;
-			productReference = 033864D92D46737B003D2E98 /* Piano.app */;
+			productReference = 03F7B5FF2D49CEE30048B9A6 /* Piano.app */;
 			productType = "com.apple.product-type.application";
 		};
 		033864A12D466E77003D2E98 /* PianoTests */ = {
@@ -126,7 +129,7 @@
 			packageProductDependencies = (
 			);
 			productName = PianoTests;
-			productReference = 033864DA2D46737B003D2E98 /* PianoTests.xctest */;
+			productReference = 03F7B6002D49CEE30048B9A6 /* PianoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		033864AB2D466E77003D2E98 /* PianoUITests */ = {
@@ -149,7 +152,7 @@
 			packageProductDependencies = (
 			);
 			productName = PianoUITests;
-			productReference = 033864DB2D46737B003D2E98 /* PianoUITests.xctest */;
+			productReference = 03F7B6012D49CEE30048B9A6 /* PianoUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */

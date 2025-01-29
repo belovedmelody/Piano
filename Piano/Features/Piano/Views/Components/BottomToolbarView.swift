@@ -4,11 +4,12 @@ struct BottomToolbarView: View {
     @Binding var showLabels: Bool
     @Binding var labelSystem: MusicTheory.LabelSystem
     @Binding var viewMode: ViewMode
+    @Binding var showKeyPicker: Bool
     
     var body: some View {
         HStack {
             Button(action: {
-                // Add tuning action
+                showKeyPicker.toggle()
             }) {
                 Image(systemName: "tuningfork")
                     .font(.title2)
@@ -24,7 +25,6 @@ struct BottomToolbarView: View {
                     viewMode = .piano
                     labelSystem = .naturals
                 }
-                // Removed all showLabels manipulation since it's handled by ContentView
             }) {
                 Image(systemName: "line.3.horizontal.decrease.circle")
                     .symbolVariant(viewMode == .piano ? .none : .fill)
@@ -52,6 +52,7 @@ struct BottomToolbarView: View {
     BottomToolbarView(
         showLabels: .constant(true),
         labelSystem: .constant(.none),
-        viewMode: .constant(.piano)
+        viewMode: .constant(.piano),
+        showKeyPicker: .constant(false)
     )
 } 
