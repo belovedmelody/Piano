@@ -94,8 +94,9 @@ extension View {
     }
 }
 
-struct CESegment: View {
-    let baseC: Int
+struct KeySegment: View {
+    let whiteNotes: [Int]  // Array of MIDI notes for white keys
+    let blackNotes: [Int]  // Array of MIDI notes for black keys
     let showLabels: Bool
     let labelSystem: MusicTheory.LabelSystem
     
@@ -103,15 +104,11 @@ struct CESegment: View {
         ZStack {
             // White keys layer
             HStack(spacing: 4) {
-                whiteKey(baseC + 0,
-                        label: MusicTheory.noteName(for: baseC + 0, style: labelSystem),
-                        showLabels: showLabels)
-                whiteKey(baseC + 2,
-                        label: MusicTheory.noteName(for: baseC + 2, style: labelSystem),
-                        showLabels: showLabels)
-                whiteKey(baseC + 4,
-                        label: MusicTheory.noteName(for: baseC + 4, style: labelSystem),
-                        showLabels: showLabels)
+                ForEach(whiteNotes, id: \.self) { note in
+                    whiteKey(note,
+                            label: MusicTheory.noteName(for: note, style: labelSystem),
+                            showLabels: showLabels)
+                }
             }
             
             // Black keys layer
@@ -120,13 +117,14 @@ struct CESegment: View {
                     HStack(spacing: 0) {
                         Spacer()
                             .frame(width: whiteKeyWidth * 0.65)
-                        blackKey(baseC + 1,
-                                label: MusicTheory.noteName(for: baseC + 1, style: labelSystem),
-                                showLabels: showLabels)
-                        Spacer()
-                        blackKey(baseC + 3,
-                                label: MusicTheory.noteName(for: baseC + 3, style: labelSystem),
-                                showLabels: showLabels)
+                        ForEach(Array(blackNotes.enumerated()), id: \.element) { index, note in
+                            blackKey(note,
+                                    label: MusicTheory.noteName(for: note, style: labelSystem),
+                                    showLabels: showLabels)
+                            if index < blackNotes.count - 1 {
+                                Spacer()
+                            }
+                        }
                         Spacer()
                             .frame(width: whiteKeyWidth * 0.65)
                     }
@@ -138,54 +136,42 @@ struct CESegment: View {
     }
 }
 
-struct FBSegment: View {
-    let baseC: Int
-    let showLabels: Bool
-    let labelSystem: MusicTheory.LabelSystem
+// Then we can define our segments like this:
+extension KeySegment {
+    static func ceSegment(baseC: Int, showLabels: Bool, labelSystem: MusicTheory.LabelSystem) -> KeySegment {
+        KeySegment(
+            whiteNotes: [baseC + 0, baseC + 2, baseC + 4],
+            blackNotes: [baseC + 1, baseC + 3],
+            showLabels: showLabels,
+            labelSystem: labelSystem
+        )
+    }
     
-    var body: some View {
-        ZStack {
-            // White keys layer
-            HStack(spacing: 4) {
-                whiteKey(baseC + 5,
-                        label: MusicTheory.noteName(for: baseC + 5, style: labelSystem),
-                        showLabels: showLabels)
-                whiteKey(baseC + 7,
-                        label: MusicTheory.noteName(for: baseC + 7, style: labelSystem),
-                        showLabels: showLabels)
-                whiteKey(baseC + 9,
-                        label: MusicTheory.noteName(for: baseC + 9, style: labelSystem),
-                        showLabels: showLabels)
-                whiteKey(baseC + 11,
-                        label: MusicTheory.noteName(for: baseC + 11, style: labelSystem),
-                        showLabels: showLabels)
-            }
-            
-            // Black keys layer
-            GeometryReader { geometry in
-                VStack(spacing: 0) {
-                    HStack(spacing: 0) {
-                        Spacer()
-                            .frame(width: whiteKeyWidth * 0.65)
-                        blackKey(baseC + 6,
-                                label: MusicTheory.noteName(for: baseC + 6, style: labelSystem),
-                                showLabels: showLabels)
-                        Spacer()
-                        blackKey(baseC + 8,
-                                label: MusicTheory.noteName(for: baseC + 8, style: labelSystem),
-                                showLabels: showLabels)
-                        Spacer()
-                        blackKey(baseC + 10,
-                                label: MusicTheory.noteName(for: baseC + 10, style: labelSystem),
-                                showLabels: showLabels)
-                        Spacer()
-                            .frame(width: whiteKeyWidth * 0.65)
-                    }
-                    Spacer()
-                        .frame(height: geometry.size.height * 0.4)
-                }
-            }
-        }
+    static func fbSegment(baseC: Int, showLabels: Bool, labelSystem: MusicTheory.LabelSystem) -> KeySegment {
+        KeySegment(
+            whiteNotes: [baseC + 5, baseC + 7, baseC + 9, baseC + 11],
+            blackNotes: [baseC + 6, baseC + 8, baseC + 10],
+            showLabels: showLabels,
+            labelSystem: labelSystem
+        )
+    }
+    
+    static func lowerFBSegment(baseC: Int, showLabels: Bool, labelSystem: MusicTheory.LabelSystem) -> KeySegment {
+        KeySegment(
+            whiteNotes: [baseC - 7, baseC - 5, baseC - 3, baseC - 1],
+            blackNotes: [baseC - 6, baseC - 4, baseC - 2],
+            showLabels: showLabels,
+            labelSystem: labelSystem
+        )
+    }
+    
+    static func upperCESegment(baseC: Int, showLabels: Bool, labelSystem: MusicTheory.LabelSystem) -> KeySegment {
+        KeySegment(
+            whiteNotes: [baseC + 12, baseC + 14, baseC + 16],
+            blackNotes: [baseC + 13, baseC + 15],
+            showLabels: showLabels,
+            labelSystem: labelSystem
+        )
     }
 }
 
@@ -196,16 +182,8 @@ struct PianoRegisterView: View {
     
     var body: some View {
         HStack(spacing: 4) {
-            CESegment(
-                baseC: baseC,
-                showLabels: showLabels,
-                labelSystem: labelSystem
-            )
-            FBSegment(
-                baseC: baseC,
-                showLabels: showLabels,
-                labelSystem: labelSystem
-            )
+            KeySegment.ceSegment(baseC: baseC, showLabels: showLabels, labelSystem: labelSystem)
+            KeySegment.fbSegment(baseC: baseC, showLabels: showLabels, labelSystem: labelSystem)
         }
         .padding(.horizontal, 4)
     }
