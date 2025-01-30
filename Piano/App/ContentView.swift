@@ -36,7 +36,7 @@ struct ContentView: View {
     @State private var scaleLabelsOn = true
     @State private var labelSystem: MusicTheory.LabelSystem = .none
     @State private var viewMode: ViewMode = .piano
-    @State private var selectedTonic: MusicTheory.Tonic = .f_lower
+    @State private var selectedTonic: MusicTheory.Tonic = .c
     
     var body: some View {
         NavigationStack {

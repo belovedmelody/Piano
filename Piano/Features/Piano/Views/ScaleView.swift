@@ -17,10 +17,8 @@ extension View {
                 isPressed: .constant(false)
             ),
             style: NoteButtonStyle(
-                inactiveColor: isAccidental ? 
-                    Color(UIColor.systemGray2.resolvedColor(with: .init(userInterfaceStyle: .light))) : 
-                    Color(UIColor.systemGray6.resolvedColor(with: .init(userInterfaceStyle: .light))),
-                overlayColor: isAccidental ? .black : .black,
+                inactiveColor: .white,
+                overlayColor: .black,
                 overlayOpacity: 0.2,
                 hapticStyle: .rigid,
                 hapticIntensity: 0.67,
@@ -34,9 +32,7 @@ extension View {
                             .font(.subheadline)
                             .fontWeight(.medium)
                             .fontDesign(.rounded)
-                            .foregroundColor(isAccidental ? 
-                                Color(UIColor.systemGray3.resolvedColor(with: .init(userInterfaceStyle: .dark))) :
-                                Color(UIColor.systemGray3.resolvedColor(with: .init(userInterfaceStyle: .dark))))
+                            .foregroundColor(Color(.systemGray))
                     }
                 }
             )
