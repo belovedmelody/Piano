@@ -47,29 +47,30 @@ struct NoteButtonView<Label: View>: View {
     var body: some View {
         ZStack {
             GeometryReader { geometry in
-                style.shape(geometry.frame(in: .local))
-                    .fill(style.inactiveColor)
-                    .overlay(
-                        style.shape(geometry.frame(in: .local))
-                            .fill(style.overlayColor.opacity(viewModel.isPressed ? style.overlayOpacity : 0))
-                    )
-                    .shadow(
-                        color: .black.opacity(style.shadowEnabled ? 0.25 : 0),
-                        radius: style.shadowRadius,
-                        x: 0,
-                        y: style.shadowY
-                    )
-                    .animation(nil, value: viewModel.isPressed)
+                ZStack {
+                    style.shape(geometry.frame(in: .local))
+                        .fill(style.inactiveColor)
+                        .shadow(
+                            color: .black.opacity(style.shadowEnabled ? 0.25 : 0),
+                            radius: style.shadowRadius,
+                            x: 0,
+                            y: style.shadowY
+                        )
+                    
+                    if let label = style.label {
+                        label
+                            .font(.body)
+                            .foregroundColor(.primary)
+                            .animation(nil, value: viewModel.isPressed)
+                    }
+                    
+                    style.shape(geometry.frame(in: .local))
+                        .fill(style.overlayColor.opacity(viewModel.isPressed ? style.overlayOpacity : 0))
+                }
+                .animation(nil, value: viewModel.isPressed)
             }
             
             TouchHandlingView(viewModel: viewModel, shape: style.shape)
-            
-            if let label = style.label {
-                label
-                    .font(.body)
-                    .foregroundColor(.primary)
-                    .animation(nil, value: viewModel.isPressed)
-            }
         }
         .animation(nil, value: viewModel.isPressed)
     }
