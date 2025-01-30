@@ -21,7 +21,7 @@ struct Tag: View {
 struct ToneBarLabel: View {
     let text: String
     let isAccidental: Bool
-    let showTopBottom: Bool
+    let showLabels: Bool  // For note name visibility
     let usesFlats: Bool
     
     private var cleanText: String {
@@ -29,31 +29,33 @@ struct ToneBarLabel: View {
             .replacingOccurrences(of: "♭", with: "")
     }
     
-    init(text: String, isAccidental: Bool, showTopBottom: Bool = false, usesFlats: Bool = false) {
+    init(text: String, isAccidental: Bool, showLabels: Bool = false, usesFlats: Bool = false) {
         self.text = text
         self.isAccidental = isAccidental
-        self.showTopBottom = showTopBottom
+        self.showLabels = showLabels
         self.usesFlats = usesFlats
     }
     
     var body: some View {
         ZStack {
-            // Center text (always visible)
-            Text(cleanText)  // Use cleanText instead of text
-                .font(.body)
-                .fontWeight(.medium)
-                .fontDesign(.rounded)
-                .foregroundColor(Color(.systemGray))
+            // Center text (only visible when showLabels is true)
+            if showLabels {
+                Text(cleanText)
+                    .font(.body)
+                    .fontWeight(.medium)
+                    .fontDesign(.rounded)
+                    .foregroundColor(Color(.systemGray))
+            }
             
-            // Optional top/bottom text
+            // Tags (always visible for accidentals)
             VStack {
                 Tag(text: "♯")
-                    .opacity((showTopBottom && isAccidental && !usesFlats) ? 1 : 0)
+                    .opacity((isAccidental && !usesFlats) ? 1 : 0)
                 
                 Spacer()
                 
                 Tag(text: "♭")
-                    .opacity((showTopBottom && isAccidental && usesFlats) ? 1 : 0)
+                    .opacity((isAccidental && usesFlats) ? 1 : 0)
             }
         }
     }
@@ -61,7 +63,7 @@ struct ToneBarLabel: View {
 
 #Preview {
     VStack(spacing: 20) {
-        ToneBarLabel(text: "D♯", isAccidental: true, showTopBottom: true)
+        ToneBarLabel(text: "D♯", isAccidental: true, showLabels: true)
     }
     .padding()
     .background(Color(.systemGray6))

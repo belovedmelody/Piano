@@ -8,33 +8,40 @@ struct BottomToolbarView: View {
     @Binding var showKeyPicker: Bool
     
     var body: some View {
-        HStack {
-            Button {
-                showKeyPicker.toggle()
-            } label: {
-                Image(systemName: "tuningfork")
-                    .font(.title2)
+        ZStack {
+            // Base layer with tuning fork and labels buttons
+            HStack {
+                Button {
+                    showKeyPicker.toggle()
+                } label: {
+                    HStack(spacing: 4) {
+                        Image(systemName: "tuningfork")
+                            .font(.title2)
+                        Text(selectedTonic.rawDisplayName)
+                            .font(.title3)
+                            .fontDesign(.rounded)
+                    }
+                }
+                
+                Spacer()
+                
+                Button {
+                    showLabels.toggle()
+                    if showLabels {
+                        labelSystem = .naturals
+                    }
+                } label: {
+                    Image(systemName: "textformat")
+                        .font(.title2)
+                }
             }
             
-            Spacer()
-            
+            // Filter button layer
             Button {
                 viewMode = viewMode == .piano ? .scale : .piano
             } label: {
                 Image(systemName: "line.3.horizontal.decrease.circle")
                     .symbolVariant(viewMode == .piano ? .none : .fill)
-                    .font(.title2)
-            }
-            
-            Spacer()
-            
-            Button {
-                showLabels.toggle()
-                if showLabels {
-                    labelSystem = .naturals
-                }
-            } label: {
-                Image(systemName: "textformat")
                     .font(.title2)
             }
         }

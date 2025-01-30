@@ -27,15 +27,13 @@ extension View {
                 },
                 shadowEnabled: true,
                 label: {
-                    if showLabels {
-                        ToneBarLabel(
-                            text: label,
-                            isAccidental: isAccidental,
-                            showTopBottom: true,
-                            usesFlats: MusicTheory.usesFlats(tonic)
-                        )
-                        .padding(.vertical, 16)
-                    }
+                    ToneBarLabel(
+                        text: label,
+                        isAccidental: isAccidental,
+                        showLabels: showLabels,
+                        usesFlats: MusicTheory.usesFlats(tonic)
+                    )
+                    .padding(.vertical, 16)
                 }
             )
         )

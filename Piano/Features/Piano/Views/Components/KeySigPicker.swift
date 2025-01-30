@@ -14,15 +14,16 @@ struct KeySigPicker: View {
                         RoundedRectangle(cornerRadius: 999)
                             .strokeBorder(.quaternary)
                     )
-                    .frame(width: 225, height: 48)
+                    .frame(width: 250, height: 60)
                 
                 // Foreground
                 VStack {
                     Picker("Key", selection: $selectedTonic) {
                         ForEach(MusicTheory.Tonic.allCases.reversed(), id: \.self) { tonic in
                             Text(tonic.rawDisplayName)
-                                .font(.body)
+                                .font(.title3)
                                 .foregroundColor(.primary)
+                                .fontDesign(.rounded)
                                 .rotationEffect(.degrees(-90))
                         }
                     }

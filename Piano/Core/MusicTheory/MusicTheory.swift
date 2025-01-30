@@ -2,17 +2,17 @@ import Foundation
 
 enum MusicTheory {
     enum Tonic: Int, CaseIterable {
-        case f_lower = 0  // F3
-        case g_flat, g, a_flat, a, b_flat, b, c, d_flat, d, e_flat, e, f  // to F4
+        case c = 0      // C4 (MIDI 60)
+        case c_sharp, d, d_sharp, e, f, f_sharp, g, g_sharp, a, a_sharp, b, c_upper
         
-        private static let names = ["F₃", "G♭", "G", "A♭", "A", "B♭", "B", "C", "D♭", "D", "E♭", "E", "F₄"]
+        private static let names = ["C₄", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B", "C₅"]
         
         var rawDisplayName: String {
             Self.names[rawValue]
         }
         
         var midiNumber: Int {
-            rawValue + 53  // F3 starts at MIDI 53
+            rawValue + 60  // C4 starts at MIDI 60
         }
     }
     
@@ -32,9 +32,10 @@ enum MusicTheory {
     }
 
     // Helper to determine if a tonic uses flats
+    // ## Change this to use flat nomenclature again
     static func usesFlats(_ tonic: Tonic) -> Bool {
         switch tonic {
-        case .f_lower, .b_flat, .e_flat, .a_flat, .d_flat, .g_flat, .f:
+        case .f, .a_sharp, .d_sharp, .g_sharp, .c_sharp, .f_sharp:
             return true
         default:
             return false
