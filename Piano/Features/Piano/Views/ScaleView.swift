@@ -10,7 +10,7 @@ struct ToneBarShape: Shape {
 }
 
 extension View {
-    func toneBar(_ midiNote: Int, showLabels: Bool, label: String, isAccidental: Bool) -> some View {
+    func toneBar(_ midiNote: Int, showLabels: Bool, label: String, isAccidental: Bool, tonic: MusicTheory.Tonic) -> some View {
         NoteButtonView(
             viewModel: NoteButtonViewModel(
                 noteNumbers: [midiNote],
@@ -28,11 +28,13 @@ extension View {
                 shadowEnabled: true,
                 label: {
                     if showLabels {
-                        Text(label)
-                            .font(.subheadline)
-                            .fontWeight(.medium)
-                            .fontDesign(.rounded)
-                            .foregroundColor(Color(.systemGray))
+                        ToneBarLabel(
+                            text: label,
+                            isAccidental: isAccidental,
+                            showTopBottom: true,
+                            usesFlats: MusicTheory.usesFlats(tonic)
+                        )
+                        .padding(.vertical, 16)
                     }
                 }
             )
@@ -53,7 +55,8 @@ struct ScaleViewRegister: View {
                     midiNote,
                     showLabels: showLabels,
                     label: MusicTheory.noteName(for: midiNote, tonic: tonic),
-                    isAccidental: MusicTheory.isAccidental(midiNote)
+                    isAccidental: MusicTheory.isAccidental(midiNote),
+                    tonic: tonic
                 )
             }
         }
