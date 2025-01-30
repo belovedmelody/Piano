@@ -5,42 +5,22 @@ struct BottomToolbarView: View {
     @Binding var labelSystem: MusicTheory.LabelSystem
     @Binding var viewMode: ViewMode
     @Binding var selectedTonic: MusicTheory.Tonic
+    @Binding var showKeyPicker: Bool
     
     var body: some View {
         HStack {
-            Button(action: {
-                if let currentIndex = MusicTheory.Tonic.allCases.firstIndex(of: selectedTonic),
-                   currentIndex > 0 {
-                    selectedTonic = MusicTheory.Tonic.allCases[currentIndex - 1]
-                }
-            }) {
-                Image(systemName: "chevron.left")
+            Button {
+                showKeyPicker.toggle()
+            } label: {
+                Image(systemName: "tuningfork")
                     .font(.title2)
             }
             
             Spacer()
             
-            Button(action: {
-                if let currentIndex = MusicTheory.Tonic.allCases.firstIndex(of: selectedTonic),
-                   currentIndex < MusicTheory.Tonic.allCases.count - 1 {
-                    selectedTonic = MusicTheory.Tonic.allCases[currentIndex + 1]
-                }
-            }) {
-                Image(systemName: "chevron.right")
-                    .font(.title2)
-            }
-            
-            Spacer()
-            
-            Button(action: {
-                if viewMode == .piano {
-                    viewMode = .scale
-                    labelSystem = .naturals
-                } else {
-                    viewMode = .piano
-                    labelSystem = .naturals
-                }
-            }) {
+            Button {
+                viewMode = viewMode == .piano ? .scale : .piano
+            } label: {
                 Image(systemName: "line.3.horizontal.decrease.circle")
                     .symbolVariant(viewMode == .piano ? .none : .fill)
                     .font(.title2)
@@ -48,18 +28,18 @@ struct BottomToolbarView: View {
             
             Spacer()
             
-            Button(action: {
+            Button {
                 showLabels.toggle()
                 if showLabels {
                     labelSystem = .naturals
                 }
-            }) {
+            } label: {
                 Image(systemName: "textformat")
                     .font(.title2)
             }
         }
         .padding()
-        .background(Color(.systemGray6))
+        .background(.thickMaterial)
     }
 }
 
@@ -68,6 +48,7 @@ struct BottomToolbarView: View {
         showLabels: .constant(true),
         labelSystem: .constant(.none),
         viewMode: .constant(.piano),
-        selectedTonic: .constant(.c)
+        selectedTonic: .constant(.c),
+        showKeyPicker: .constant(false)
     )
 } 

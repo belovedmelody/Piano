@@ -11,6 +11,7 @@ struct MainContent: View {
     let scaleLabelsOn: Bool
     let labelSystem: MusicTheory.LabelSystem
     let selectedTonic: MusicTheory.Tonic
+    let showKeyPicker: Bool
     
     var body: some View {
         if viewMode == .piano {
@@ -37,29 +38,44 @@ struct ContentView: View {
     @State private var labelSystem: MusicTheory.LabelSystem = .none
     @State private var viewMode: ViewMode = .piano
     @State private var selectedTonic: MusicTheory.Tonic = .c
+    @State private var showKeyPicker = false
     
     var body: some View {
         NavigationStack {
-            MainContent(
-                viewMode: viewMode,
-                pianoLabelsOn: pianoLabelsOn,
-                scaleLabelsOn: scaleLabelsOn,
-                labelSystem: labelSystem,
-                selectedTonic: selectedTonic
-            )
-            .safeAreaInset(edge: .bottom) {
-                BottomToolbarView(
-                    showLabels: viewMode == .piano ? $pianoLabelsOn : $scaleLabelsOn,
-                    labelSystem: $labelSystem,
-                    viewMode: $viewMode,
-                    selectedTonic: $selectedTonic
+            ZStack {
+                MainContent(
+                    viewMode: viewMode,
+                    pianoLabelsOn: pianoLabelsOn,
+                    scaleLabelsOn: scaleLabelsOn,
+                    labelSystem: labelSystem,
+                    selectedTonic: selectedTonic,
+                    showKeyPicker: showKeyPicker
                 )
+                .safeAreaInset(edge: .bottom) {
+                    BottomToolbarView(
+                        showLabels: viewMode == .piano ? $pianoLabelsOn : $scaleLabelsOn,
+                        labelSystem: $labelSystem,
+                        viewMode: $viewMode,
+                        selectedTonic: $selectedTonic,
+                        showKeyPicker: $showKeyPicker
+                    )
+                }
+                .navigationTitle("Piano")
+                .navigationBarTitleDisplayMode(.large)
+                .toolbarBackground(.visible, for: .navigationBar)
+                .toolbarBackground(Color(.systemGray6), for: .navigationBar)
+                .background(Color(.systemGray4))
+                
+                VStack {
+                    Spacer()  // This pushes the KeySigPicker down
+                    
+                    KeySigPicker(
+                        selectedTonic: $selectedTonic,
+                        isVisible: $showKeyPicker
+                    )
+                    .padding(.bottom, 32)
+                }
             }
-            .navigationTitle("Piano")
-            .navigationBarTitleDisplayMode(.large)
-            .toolbarBackground(.visible, for: .navigationBar)
-            .toolbarBackground(Color(.systemGray6), for: .navigationBar)
-            .background(Color(.systemGray4))
         }
         .tint(.orange)
     }
