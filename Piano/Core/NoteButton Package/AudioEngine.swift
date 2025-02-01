@@ -1,3 +1,5 @@
+// A simplwe sine wave synthesizer, specifying midi value, velocity (always max), and channel
+
 import AVFoundation
 
 class AudioEngine: ObservableObject {

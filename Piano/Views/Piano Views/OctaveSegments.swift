@@ -1,3 +1,6 @@
+// Piano keys have a very specific layout, made of two ergonomic symmetrical segments.
+// CE is the three-note segment; FB is the four-note.
+
 import SwiftUI
 
 enum OctaveSegmentType {

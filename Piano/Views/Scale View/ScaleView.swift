@@ -1,3 +1,6 @@
+// A simplified musical layout containing only key diatonic tones for the selected tonic/keySignature
+// ScaleView is activated by the "filter" button in the bottom toolbar, because it filters out the non-diatonic tones.
+
 import SwiftUI
 
 struct ToneBarShape: Shape {

@@ -1,3 +1,5 @@
+// Controller for noteButtons, and their interaction with AudioEngine
+
 import SwiftUI
 
 class NoteButtonViewModel: ObservableObject {

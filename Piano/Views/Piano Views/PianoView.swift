@@ -1,3 +1,5 @@
+// Vertical stack of three C-based piano octaves for default ContentView
+
 import SwiftUI
 
 struct OctaveStack: View {

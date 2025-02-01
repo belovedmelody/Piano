@@ -1,3 +1,6 @@
+// The special label view scaleView toneBars.
+// Contain special tags for sharps and flats, as an alternative to changing the color of the whole bar.
+
 import SwiftUI
 
 struct Tag: View {

@@ -1,3 +1,5 @@
+// Contains all of the music theory logic for building scales with noteButtons, and for labeling views.
+
 import Foundation
 
 enum MusicTheory {

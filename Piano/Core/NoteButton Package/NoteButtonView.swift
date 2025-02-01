@@ -1,3 +1,6 @@
+// The Swiftiest of the noteButton package. 
+// Specifies all the parameters accessible, as well as their default values.
+
 import SwiftUI
 import UIKit  // For UIImpactFeedbackGenerator
 

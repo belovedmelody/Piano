@@ -1,3 +1,5 @@
+// An assembler for piano views to be modified by offsets according to the tonic
+
 import SwiftUI
 // No need for additional imports since OctaveParts is in the same module
 

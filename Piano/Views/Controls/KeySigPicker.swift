@@ -1,3 +1,4 @@
+// A pitch pipe for selecting the tonic 
 import SwiftUI
 
 struct KeySigPicker: View {

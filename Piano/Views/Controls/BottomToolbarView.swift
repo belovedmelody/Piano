@@ -1,3 +1,8 @@
+// The bottom strip for musical view controls
+// Tuning fork activates the key signature picker
+// Filter switches between piano (unfiltered) and scale (diatonically filtered) views
+// Text format toggles the label system
+
 import SwiftUI
 
 struct BottomToolbarView: View {

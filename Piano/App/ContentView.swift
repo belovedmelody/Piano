@@ -1,3 +1,7 @@
+// ContentView is where we load into the three-octave view by default. 
+// It should remain the singular view, except for Settings/Preferences. 
+// ContentView should remain simple, with as much logic offloaded to as possible.
+
 import SwiftUI
 
 enum ViewMode {

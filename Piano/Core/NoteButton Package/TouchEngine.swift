@@ -1,3 +1,6 @@
+// Uses UIKit logic from Gary Newby's PianoKit to manage touch events
+// in a way that is suited well for musical instruments.
+
 import SwiftUI
 import UIKit
 

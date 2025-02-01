@@ -1,3 +1,5 @@
+// Extension of the NoteButtonView, defining the shape, dimensions, and behaviors of piano keys.
+
 import SwiftUI
 
 extension View {
