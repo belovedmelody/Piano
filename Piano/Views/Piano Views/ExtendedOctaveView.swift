@@ -7,6 +7,7 @@ struct ExtendedOctaveView: View {
     let tonic: Int  // Changed from MusicTheory.Tonic to Int
     let showLabels: Bool
     let labelSystem: MusicTheory.LabelSystem
+    @State private var keyBoundaries: [KeyBoundaries] = []
     
     private func determineSegments() -> [OctaveSegmentType] {
         let scaleNotes = MusicTheory.majorScale(fromMidiNumber: tonic)  // Now we can use tonic directly
@@ -53,16 +54,37 @@ struct ExtendedOctaveView: View {
     }
     
     var body: some View {
-        HStack(spacing: 4) {
-            ForEach(determineSegments(), id: \.segmentName) { segment in
-                OctaveSegment(
-                    type: segment,
-                    showLabels: showLabels,
-                    labelSystem: labelSystem
-                )
+        ZStack {
+            HStack(spacing: 4) {
+                ForEach(determineSegments(), id: \.segmentName) { segment in
+                    OctaveSegment(
+                        type: segment,
+                        showLabels: showLabels,
+                        labelSystem: labelSystem
+                    )
+                }
+            }
+            .padding(.horizontal, 4)
+            
+            // Debug overlay
+            ForEach(keyBoundaries, id: \.keyIndex) { boundary in
+                // Left edge markers in red
+                Rectangle()
+                    .fill(.red.opacity(0.3))
+                    .frame(width: 2)
+                    .position(x: boundary.leftEdge, y: 50)
+                
+                // Right edge markers in blue
+                Rectangle()
+                    .fill(.blue.opacity(0.3))
+                    .frame(width: 2)
+                    .position(x: boundary.rightEdge, y: 50)
             }
         }
-        .padding(.horizontal, 4)
+        .onPreferenceChange(KeyBoundaryPreferenceKey.self) { boundaries in
+            keyBoundaries = boundaries.sorted { $0.keyIndex < $1.keyIndex }
+            print("Collected boundaries: \(boundaries)")  // Debug print
+        }
     }
 }
 

@@ -6,6 +6,7 @@ extension View {
     var whiteKeyWidth: CGFloat {
         let screenWidth = UIScreen.main.bounds.width
         let availableWidth = screenWidth - 32
+        // 32pts = 8pts edge padding (4pts × 2 sides) + 24pts internal spacing (4pts × 6 gaps between 7 keys)
         return availableWidth / 7
     }
 }
@@ -40,16 +41,19 @@ extension View {
                 },
                 shadowEnabled: true,
                 label: {
-                    Group {
-                        if showLabels {
-                            VStack {
-                                Spacer()
-                                Text(label)
-                                    .font(.subheadline)
-                                    .fontWeight(.medium)
-                                    .fontDesign(.rounded)
-                                    .foregroundColor(.gray)
-                                    .padding(.bottom, 13)
+                    ZStack {
+                        KeyBoundaryRecorder(keyIndex: midiNote)
+                        Group {
+                            if showLabels {
+                                VStack {
+                                    Spacer()
+                                    Text(label)
+                                        .font(.subheadline)
+                                        .fontWeight(.medium)
+                                        .fontDesign(.rounded)
+                                        .foregroundColor(.gray)
+                                        .padding(.bottom, 13)
+                                }
                             }
                         }
                     }
@@ -78,16 +82,19 @@ extension View {
                 },
                 shadowEnabled: true,
                 label: {
-                    Group {
-                        if showLabels {
-                            VStack {
-                                Spacer()
-                                Text(label)
-                                    .font(.caption)
-                                    .fontWeight(.medium)
-                                    .fontDesign(.rounded)
-                                    .foregroundColor(Color(.systemGray2))
-                                    .padding(.bottom, 11.5)
+                    ZStack {
+                        KeyBoundaryRecorder(keyIndex: midiNote)
+                        Group {
+                            if showLabels {
+                                VStack {
+                                    Spacer()
+                                    Text(label)
+                                        .font(.caption)
+                                        .fontWeight(.medium)
+                                        .fontDesign(.rounded)
+                                        .foregroundColor(Color(.systemGray2))
+                                        .padding(.bottom, 11.5)
+                                }
                             }
                         }
                     }
