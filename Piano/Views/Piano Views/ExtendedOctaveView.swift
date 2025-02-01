@@ -1,12 +1,13 @@
 import SwiftUI
+// No need for additional imports since OctaveParts is in the same module
 
 struct ExtendedOctaveView: View {
-    let tonic: MusicTheory.Tonic
+    let tonic: Int  // Changed from MusicTheory.Tonic to Int
     let showLabels: Bool
     let labelSystem: MusicTheory.LabelSystem
     
     private func determineSegments() -> [OctaveSegmentType] {
-        let scaleNotes = MusicTheory.majorScale(fromMidiNumber: tonic.midiNumber)
+        let scaleNotes = MusicTheory.majorScale(fromMidiNumber: tonic)  // Now we can use tonic directly
         
         // Find the octave boundaries
 //        let lowestNote = scaleNotes.min()!
@@ -79,28 +80,28 @@ struct ExtendedOctaveView: View {
     VStack(spacing: 20) {
         // Test C major
         ExtendedOctaveView(
-            tonic: .c,
+            tonic: 60,
             showLabels: true,
             labelSystem: .naturals
         )
         
         // Test F major
         ExtendedOctaveView(
-            tonic: .f,
+            tonic: 65,
             showLabels: true,
             labelSystem: .naturals
         )
         
         // Test E major
         ExtendedOctaveView(
-            tonic: .e,
+            tonic: 72,
             showLabels: true,
             labelSystem: .naturals
         )
         
         // Test B major
         ExtendedOctaveView(
-            tonic: .b,
+            tonic: 84,
             showLabels: true,
             labelSystem: .naturals
         )

@@ -30,3 +30,5 @@ class NoteButtonViewModel: ObservableObject {
         pressedBinding.wrappedValue = newValue
     }
 } 
+
+//Notes
