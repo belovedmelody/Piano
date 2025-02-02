@@ -13,45 +13,29 @@ struct BottomToolbarView: View {
     @Binding var showKeyPicker: Bool
     
     var body: some View {
-        ZStack {
-            // Base layer with tuning fork and labels buttons
-            HStack {
-                Button {
-                    showKeyPicker.toggle()
-                } label: {
-                    HStack(spacing: 4) {
-                        Image(systemName: "tuningfork")
-                            .font(.title2)
-                        Text(selectedTonic.rawDisplayName)
-                            .font(.title3)
-                            .fontDesign(.rounded)
-                    }
-                }
-                
-                Spacer()
-                
-                Button {
-                    showLabels.toggle()
-                    if showLabels {
-                        labelSystem = .naturals
-                    }
-                } label: {
-                    Image(systemName: "textformat")
-                        .font(.title2)
+        HStack {
+            Button {
+                showKeyPicker.toggle()
+            } label: {
+                HStack(spacing: 4) {
+                    Image(systemName: "tuningfork")
+                    Text(selectedTonic.rawDisplayName)
+                        .font(.title3)
+                        .fontDesign(.rounded)
                 }
             }
             
-            // Filter button layer
+            Spacer()
+            
             Button {
-                viewMode = viewMode == .piano ? .scale : .piano
+                showLabels.toggle()
+                if showLabels {
+                    labelSystem = .naturals
+                }
             } label: {
-                Image(systemName: "line.3.horizontal.decrease.circle")
-                    .symbolVariant(viewMode == .piano ? .none : .fill)
-                    .font(.title2)
+                Image(systemName: "textformat")
             }
         }
-        .padding()
-        .background(.thickMaterial)
     }
 }
 

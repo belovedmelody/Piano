@@ -5,26 +5,24 @@ import SwiftUI
 struct OctaveStack: View {
     let showLabels: Bool
     let labelSystem: MusicTheory.LabelSystem
+    let baseTonic: Int
     
     var body: some View {
         VStack(spacing: 10) {
-            // Top octave (C5)
             ExtendedOctaveView(
-                tonic: 72,  // C5
+                tonic: baseTonic + 12,
                 showLabels: showLabels,
                 labelSystem: labelSystem
             )
             
-            // Middle octave (C4)
             ExtendedOctaveView(
-                tonic: 60,  // C4
+                tonic: baseTonic,
                 showLabels: showLabels,
                 labelSystem: labelSystem
             )
             
-            // Bottom octave (C3)
             ExtendedOctaveView(
-                tonic: 48,  // C3
+                tonic: baseTonic - 12,
                 showLabels: showLabels,
                 labelSystem: labelSystem
             )
@@ -39,7 +37,8 @@ struct PianoView: View {
     var body: some View {
         OctaveStack(
             showLabels: showLabels,
-            labelSystem: labelSystem
+            labelSystem: labelSystem,
+            baseTonic: 60
         )
     }
 }

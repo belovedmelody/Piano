@@ -16,12 +16,14 @@ struct MainContent: View {
     let labelSystem: MusicTheory.LabelSystem
     let selectedTonic: MusicTheory.Tonic
     let showKeyPicker: Bool
+    let baseTonic: Int
     
     var body: some View {
         if viewMode == .piano {
-            PianoView(
+            OctaveStack(
                 showLabels: pianoLabelsOn,
-                labelSystem: labelSystem
+                labelSystem: labelSystem,
+                baseTonic: baseTonic
             )
             .padding(.vertical, 10)
         } else {
@@ -43,6 +45,7 @@ struct ContentView: View {
     @State private var viewMode: ViewMode = .piano
     @State private var selectedTonic: MusicTheory.Tonic = .c
     @State private var showKeyPicker = false
+    @State private var baseTonic: Int = 60  // Add this for middle C
     
     var body: some View {
         NavigationStack {
@@ -53,26 +56,41 @@ struct ContentView: View {
                     scaleLabelsOn: scaleLabelsOn,
                     labelSystem: labelSystem,
                     selectedTonic: selectedTonic,
-                    showKeyPicker: showKeyPicker
+                    showKeyPicker: showKeyPicker,
+                    baseTonic: baseTonic
                 )
-                .safeAreaInset(edge: .bottom) {
-                    BottomToolbarView(
-                        showLabels: viewMode == .piano ? $pianoLabelsOn : $scaleLabelsOn,
-                        labelSystem: $labelSystem,
-                        viewMode: $viewMode,
-                        selectedTonic: $selectedTonic,
-                        showKeyPicker: $showKeyPicker
-                    )
+                .toolbar {
+                    // Top bar filter button
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            viewMode = viewMode == .piano ? .scale : .piano
+                        } label: {
+                            Image(systemName: "line.3.horizontal.decrease.circle")
+                                .symbolVariant(viewMode == .piano ? .none : .fill)
+                        }
+                    }
+                    
+                    // Bottom bar controls
+                    ToolbarItem(placement: .bottomBar) {
+                        BottomToolbarView(
+                            showLabels: viewMode == .piano ? $pianoLabelsOn : $scaleLabelsOn,
+                            labelSystem: $labelSystem,
+                            viewMode: $viewMode,
+                            selectedTonic: $selectedTonic,
+                            showKeyPicker: $showKeyPicker
+                        )
+                    }
                 }
                 .navigationTitle("Piano")
                 .navigationBarTitleDisplayMode(.large)
                 .toolbarBackground(.visible, for: .navigationBar)
                 .toolbarBackground(Color(.systemGray6), for: .navigationBar)
+                .toolbarBackground(.visible, for: .bottomBar)
+                .toolbarBackground(Color(.systemGray6), for: .bottomBar)
                 .background(Color(.systemGray4))
                 
                 VStack {
-                    Spacer()  // This pushes the KeySigPicker down
-                    
+                    Spacer()
                     KeySigPicker(
                         selectedTonic: $selectedTonic,
                         isVisible: $showKeyPicker
@@ -81,7 +99,7 @@ struct ContentView: View {
                 }
             }
         }
-        .tint(.orange)
+        .tint(Color.orange)
     }
 }
 

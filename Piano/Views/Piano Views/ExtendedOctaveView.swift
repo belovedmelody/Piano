@@ -54,7 +54,7 @@ struct ExtendedOctaveView: View {
     }
     
     var body: some View {
-        ZStack {
+        ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 4) {
                 ForEach(determineSegments(), id: \.segmentName) { segment in
                     OctaveSegment(
@@ -65,25 +65,10 @@ struct ExtendedOctaveView: View {
                 }
             }
             .padding(.horizontal, 4)
-            
-            // Debug overlay
-            ForEach(keyBoundaries, id: \.keyIndex) { boundary in
-                // Left edge markers in red
-                Rectangle()
-                    .fill(.red.opacity(0.3))
-                    .frame(width: 2)
-                    .position(x: boundary.leftEdge, y: 50)
-                
-                // Right edge markers in blue
-                Rectangle()
-                    .fill(.blue.opacity(0.3))
-                    .frame(width: 2)
-                    .position(x: boundary.rightEdge, y: 50)
-            }
         }
+        .scrollDisabled(true)
         .onPreferenceChange(KeyBoundaryPreferenceKey.self) { boundaries in
             keyBoundaries = boundaries.sorted { $0.keyIndex < $1.keyIndex }
-            print("Collected boundaries: \(boundaries)")  // Debug print
         }
     }
 }
